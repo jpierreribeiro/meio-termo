@@ -150,7 +150,7 @@ function mostrar({ prob, indigena, retrato, saturacao }) {
     : "Ficou dividido: nenhuma cor chegou à metade. É o que acontece com muitos rostos, e é exatamente o meio-termo de que fala esta reportagem.";
   const nota = prob[1] + 2 * prob[2];
   const perto = GRUPOS.reduce((x, g) => Math.abs(g.m - nota) < Math.abs(x.m - nota) ? g : x);
-  txt += ` Na linha de branca a preta, lá em cima, o seu rosto ficou mais perto de quem ${perto.mudou ? `alternou entre ${perto.nome}` : perto.nome.replace("sempre ", "sempre se declarou ")}.`;
+  txt += ` Na linha de branca a preta, mais abaixo nesta página, o seu rosto ficou mais perto de quem ${perto.mudou ? `alternou entre ${perto.nome}` : perto.nome.replace("sempre ", "sempre se declarou ")}.`;
   $("leitura").textContent = txt;
 
   const notas = [];
