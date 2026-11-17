@@ -1,0 +1,68 @@
+{
+  "candidaturas": 1569137,
+  "pessoas": 1178425,
+  "anos": [
+    2016,
+    2018,
+    2020,
+    2022,
+    2024
+  ],
+  "candidaturas_por_ano": {
+    "2016": 498054,
+    "2018": 29119,
+    "2020": 551921,
+    "2022": 29121,
+    "2024": 460922
+  },
+  "raca_por_ano_pct": {
+    "2016": {
+      "amarela": 0.44,
+      "branca": 51.49,
+      "indigena": 0.34,
+      "parda": 39.1,
+      "preta": 8.63
+    },
+    "2018": {
+      "amarela": 0.58,
+      "branca": 52.42,
+      "indigena": 0.46,
+      "parda": 35.68,
+      "preta": 10.86
+    },
+    "2020": {
+      "amarela": 0.36,
+      "branca": 48.64,
+      "indigena": 0.4,
+      "parda": 39.96,
+      "preta": 10.64
+    },
+    "2022": {
+      "amarela": 0.4,
+      "branca": 48.42,
+      "indigena": 0.65,
+      "parda": 36.33,
+      "preta": 14.2
+    },
+    "2024": {
+      "amarela": 0.39,
+      "branca": 47.13,
+      "indigena": 0.56,
+      "parda": 40.54,
+      "preta": 11.38
+    }
+  },
+  "pessoas_2mais_eleicoes": 290724,
+  "mudaram_declaracao": 80584,
+  "mudaram_pct": 27.72,
+  "historicos_mais_comuns_entre_quem_mudou_pct": {
+    "branca|parda": 67.25,
+    "parda|preta": 25.78,
+    "branca|preta": 2.59,
+    "amarela|branca": 1.12,
+    "amarela|parda": 1.06,
+    "branca|parda|preta": 0.86,
+    "indigena|parda": 0.71,
+    "amarela|branca|parda": 0.26
+  }
+}

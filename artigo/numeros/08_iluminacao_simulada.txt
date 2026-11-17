@@ -1,0 +1,38 @@
+
+== sem correção ==
+original           bal-acc 0.723 | brancos→P(branca) 69.2% | desvio da nota vs original 0.00
+escuro (-1 stop)   bal-acc 0.716 | brancos→P(branca) 69.3% | desvio da nota vs original 0.05
+muito escuro (-2)  bal-acc 0.703 | brancos→P(branca) 70.4% | desvio da nota vs original 0.08
+claro (+1)         bal-acc 0.717 | brancos→P(branca) 68.4% | desvio da nota vs original 0.08
+luz quente         bal-acc 0.719 | brancos→P(branca) 66.6% | desvio da nota vs original 0.05
+escuro+quente      bal-acc 0.725 | brancos→P(branca) 68.6% | desvio da nota vs original 0.05
+luz fria           bal-acc 0.719 | brancos→P(branca) 68.0% | desvio da nota vs original 0.04
+
+== mundo cinza ==
+original           bal-acc 0.724 | brancos→P(branca) 70.2% | desvio da nota vs original 0.00
+escuro (-1 stop)   bal-acc 0.716 | brancos→P(branca) 69.8% | desvio da nota vs original 0.05
+muito escuro (-2)  bal-acc 0.703 | brancos→P(branca) 70.9% | desvio da nota vs original 0.08
+claro (+1)         bal-acc 0.717 | brancos→P(branca) 70.5% | desvio da nota vs original 0.08
+luz quente         bal-acc 0.725 | brancos→P(branca) 69.9% | desvio da nota vs original 0.01
+escuro+quente      bal-acc 0.718 | brancos→P(branca) 69.8% | desvio da nota vs original 0.05
+luz fria           bal-acc 0.723 | brancos→P(branca) 69.4% | desvio da nota vs original 0.01
+
+== exposição ==
+original           bal-acc 0.724 | brancos→P(branca) 68.6% | desvio da nota vs original 0.00
+escuro (-1 stop)   bal-acc 0.724 | brancos→P(branca) 68.6% | desvio da nota vs original 0.00
+muito escuro (-2)  bal-acc 0.724 | brancos→P(branca) 68.6% | desvio da nota vs original 0.00
+claro (+1)         bal-acc 0.717 | brancos→P(branca) 68.7% | desvio da nota vs original 0.07
+luz quente         bal-acc 0.717 | brancos→P(branca) 66.7% | desvio da nota vs original 0.05
+escuro+quente      bal-acc 0.717 | brancos→P(branca) 67.1% | desvio da nota vs original 0.05
+luz fria           bal-acc 0.720 | brancos→P(branca) 67.7% | desvio da nota vs original 0.04
+
+== cor+exposição ==
+original           bal-acc 0.718 | brancos→P(branca) 70.1% | desvio da nota vs original 0.00
+escuro (-1 stop)   bal-acc 0.721 | brancos→P(branca) 70.0% | desvio da nota vs original 0.00
+muito escuro (-2)  bal-acc 0.721 | brancos→P(branca) 70.0% | desvio da nota vs original 0.00
+claro (+1)         bal-acc 0.718 | brancos→P(branca) 70.0% | desvio da nota vs original 0.08
+luz quente         bal-acc 0.721 | brancos→P(branca) 69.9% | desvio da nota vs original 0.01
+escuro+quente      bal-acc 0.721 | brancos→P(branca) 70.0% | desvio da nota vs original 0.00
+luz fria           bal-acc 0.724 | brancos→P(branca) 69.4% | desvio da nota vs original 0.01
+
+[exited with code 0]

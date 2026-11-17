@@ -1,0 +1,12 @@
+# dados pessoais sensíveis (LGPD, art. 11): nunca versionar
+dados/
+modelos/
+resultados/
+relatorio/
+*.log
+# ambiente
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+web/artigo.pdf

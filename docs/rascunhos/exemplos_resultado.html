@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Meio-Termo · formas de mostrar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Public+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --bg: #f5f6f8; --surface: #ffffff; --fg: #18202c; --muted: #5a6577; --line: #d9dee6;
+  --accent: #2f5bd3; --accent-fg: #fff; --soft: #e8eefb;
+  --c0: #cfdbef; --c1: #7d9ad0; --c2: #23396b;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11151c; --surface: #181e28; --fg: #e7ebf2; --muted: #9aa5b8; --line: #2a3242;
+    --accent: #8aa8ff; --accent-fg: #0d1426; --soft: #1f2a40; --c0: #d5e0f3; --c1: #7d9ad0; --c2: #31508f;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-body); line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 2rem 4rem; }
+.wrap { max-width: 640px; margin: 0 auto; display: grid; gap: 2rem; }
+h1, h2 { font-family: var(--font-display); margin: 0; line-height: 1.2; text-wrap: balance; }
+h1 { font-size: 1.7rem; } h2 { font-size: 1.15rem; }
+p { margin: 0; }
+.muted { color: var(--muted); font-size: .92rem; }
+.amostras { display: flex; flex-wrap: wrap; gap: .5rem; position: sticky; top: 0; background: var(--bg); padding-block: .6rem; z-index: 2; }
+.amostras button { font: 600 .9rem var(--font-body); border: 1px solid var(--line); background: var(--surface); color: var(--fg); padding: .5rem .8rem; border-radius: 999px; cursor: pointer; }
+.amostras button[aria-pressed="true"] { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+.opcao { display: grid; gap: .8rem; }
+.rotulo { display: flex; gap: .6rem; align-items: baseline; }
+.rotulo b { font: 800 1.4rem var(--font-display); color: var(--accent); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 1.3rem; display: grid; gap: 1rem; }
+.prós { font-size: .88rem; color: var(--muted); }
+
+/* A: barras separadas, ordenadas */
+.lista { display: grid; gap: .75rem; }
+.item { display: grid; gap: .3rem; }
+.item .topo { display: flex; justify-content: space-between; align-items: baseline; }
+.item .nome { font-weight: 600; }
+.item .val { font: 500 1rem var(--font-mono); }
+.item .trilho { height: .7rem; background: var(--soft); border-radius: 999px; overflow: hidden; }
+.item .trilho div { height: 100%; background: var(--accent); border-radius: 999px; }
+.item.top .nome, .item.top .val { font-size: 1.15rem; }
+.item.top .trilho { height: 1rem; }
+.item:not(.top) .trilho div { opacity: .55; }
+
+/* B: 100 pessoas */
+.grade { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; max-width: 340px; }
+.grade span { aspect-ratio: 1; border-radius: 50%; }
+.legenda { display: flex; flex-wrap: wrap; gap: .4rem 1.1rem; font-size: .95rem; }
+.legenda i { display: inline-block; width: .8rem; height: .8rem; border-radius: 50%; margin-right: .35rem; vertical-align: -1px; }
+.k0 { background: var(--c0); } .k1 { background: var(--c1); } .k2 { background: var(--c2); }
+
+/* C: resposta em destaque */
+.destaque { display: grid; gap: .2rem; }
+.destaque .grande { font: 800 clamp(2.4rem, 12vw, 3.6rem) var(--font-display); line-height: 1; }
+.destaque .sub { font-size: 1.05rem; }
+.selo { display: inline-block; font: 600 .8rem var(--font-body); padding: .25rem .6rem; border-radius: 999px; background: var(--soft); color: var(--accent); justify-self: start; }
+.outros { display: flex; gap: 1.4rem; flex-wrap: wrap; font-size: .95rem; color: var(--muted); }
+.outros b { color: var(--fg); font-family: var(--font-mono); font-weight: 500; }
+
+/* D: régua simples */
+.regua { position: relative; height: 3.2rem; margin-top: 1.6rem; }
+.regua .faixa { position: absolute; inset: 1.1rem 0 auto; height: .8rem; border-radius: 999px; background: linear-gradient(90deg, var(--c0), var(--c1), var(--c2)); }
+.regua .pino { position: absolute; top: .2rem; width: 2px; height: 2.6rem; background: var(--fg); transform: translateX(-1px); }
+.regua .pino b { position: absolute; bottom: 2.75rem; left: 50%; transform: translateX(-50%); white-space: nowrap; font: 600 .85rem var(--font-body); background: var(--fg); color: var(--bg); padding: .15rem .5rem; border-radius: 4px; }
+.regua .pontas { position: absolute; inset: auto 0 0; display: flex; justify-content: space-between; font-size: .85rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header style="display:grid;gap:.5rem">
+    <h1>Quatro formas de mostrar o resultado</h1>
+    <p class="muted">Os números são de exemplo. Troque o caso abaixo para ver como cada forma lida com um resultado claro, um resultado dividido e o seu teste (66% parda, 27% preta, 7% branca).</p>
+  </header>
+
+  <div class="amostras" role="group" aria-label="Caso de exemplo">
+    <button data-p="7,66,27" aria-pressed="true">Seu teste</button>
+    <button data-p="84,13,3">Resultado claro</button>
+    <button data-p="46,47,7">Resultado dividido</button>
+  </div>
+
+  <section class="opcao">
+    <div class="rotulo"><b>A</b><h2>Barras separadas, da maior para a menor</h2></div>
+    <div class="card"><p id="fA"></p><div class="lista" id="A"></div></div>
+    <p class="prós">Leitura direta, como resultado de pesquisa eleitoral. Cada categoria tem sua barra; a mais provável vem primeiro e maior.</p>
+  </section>
+
+  <section class="opcao">
+    <div class="rotulo"><b>B</b><h2>De cada 100 pessoas parecidas com você</h2></div>
+    <div class="card"><p id="fB"></p><div class="grade" id="B" aria-hidden="true"></div><div class="legenda" id="lB"></div></div>
+    <p class="prós">Troca porcentagem por gente: “66 de 100 pessoas”. É a forma que costuma ser mais bem entendida por quem não lida com estatística.</p>
+  </section>
+
+  <section class="opcao">
+    <div class="rotulo"><b>C</b><h2>A resposta mais comum em destaque</h2></div>
+    <div class="card" id="C"></div>
+    <p class="prós">Uma frase grande e o resto em segundo plano. O selo diz se o resultado é claro ou dividido, para a pessoa não ler “66%” como certeza.</p>
+  </section>
+
+  <section class="opcao">
+    <div class="rotulo"><b>D</b><h2>Régua de branca a preta</h2></div>
+    <div class="card"><p id="fD"></p><div class="regua" id="D"></div></div>
+    <p class="prós">Mostra o “meio-termo” como posição numa linha, sem números. Bonito, mas esconde as porcentagens; talvez sirva como complemento, não como resposta principal.</p>
+  </section>
+</div>
+
+<script>
+const NOMES = ["branca", "parda", "preta"], PLURAL = ["brancos", "pardos", "pretos"];
+const $ = id => document.getElementById(id);
+function ordenar(p) { return p.map((v, i) => ({ v, i })).sort((a, b) => b.v - a.v); }
+function frase(p) {
+  const o = ordenar(p);
+  return `Entre candidatos com rosto parecido com o seu, <b>${o[0].v}%</b> se declararam ${PLURAL[o[0].i]}, <b>${o[1].v}%</b> ${PLURAL[o[1].i]} e <b>${o[2].v}%</b> ${PLURAL[o[2].i]}.`;
+}
+function clareza(p) {
+  const o = ordenar(p);
+  if (o[0].v >= 70) return "resultado claro";
+  if (o[0].v - o[1].v < 15) return "resultado dividido";
+  return "resultado provável, não certo";
+}
+function render(p) {
+  const o = ordenar(p);
+  $("fA").innerHTML = frase(p);
+  $("A").innerHTML = o.map((x, k) => `<div class="item${k === 0 ? " top" : ""}"><div class="topo"><span class="nome">${NOMES[x.i][0].toUpperCase() + NOMES[x.i].slice(1)}</span><span class="val">${x.v}%</span></div><div class="trilho"><div style="width:${x.v}%"></div></div></div>`).join("");
+
+  $("fB").innerHTML = `De cada 100 candidatos com rosto parecido com o seu, <b>${o[0].v}</b> se declararam ${PLURAL[o[0].i]}, <b>${o[1].v}</b> ${PLURAL[o[1].i]} e <b>${o[2].v}</b> ${PLURAL[o[2].i]}.`;
+  let pontos = [];
+  for (const x of o) for (let k = 0; k < x.v; k++) pontos.push(x.i);
+  $("B").innerHTML = pontos.slice(0, 100).map(i => `<span class="k${i}"></span>`).join("");
+  $("lB").innerHTML = o.map(x => `<span><i class="k${x.i}"></i>${x.v} ${PLURAL[x.i]}</span>`).join("");
+
+  $("C").innerHTML = `<span class="selo">${clareza(p)}</span>
+    <div class="destaque"><span class="grande">${o[0].v}% ${NOMES[o[0].i]}</span>
+    <span class="sub">foi a declaração mais comum entre candidatos com rosto parecido com o seu.</span></div>
+    <div class="outros">${o.slice(1).map(x => `<span>${NOMES[x.i]} <b>${x.v}%</b></span>`).join("")}</div>`;
+
+  const nota = (p[1] + 2 * p[2]) / 100, pos = nota / 2 * 100;
+  $("fD").textContent = "Onde o seu rosto fica, comparado ao de candidatos que se declararam brancos, pardos e pretos:";
+  $("D").innerHTML = `<div class="faixa"></div><div class="pino" style="left:${pos}%"><b style="transform:translateX(${pos < 15 ? -15 : pos > 85 ? -85 : -50}%)">você</b></div>
+    <div class="pontas"><span>branca</span><span>parda</span><span>preta</span></div>`;
+}
+document.querySelectorAll(".amostras button").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".amostras button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  render(b.dataset.p.split(",").map(Number));
+}));
+render([7, 66, 27]);
+</script>
+</body>
+</html>

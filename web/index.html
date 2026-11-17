@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Meio-Termo</title>
+<meta name="description" content="Veja como candidatos a eleições com rosto parecido com o seu declararam a própria cor. A foto não sai do seu aparelho.">
+<meta name="theme-color" content="#f1ece1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#171612" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%231b1a17'/%3E%3Crect x='7' y='14' width='18' height='5' fill='%23e0661f'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="pagina">
+
+<nav class="nav" aria-label="Principal">
+  <a class="marca" href="./">Meio<i>-</i>Termo</a>
+  <ul><li><a href="./" aria-current="page">Ferramenta</a></li><li><a href="artigo.html">O artigo</a></li></ul>
+</nav>
+
+<div class="abertura-grade">
+  <header class="abertura">
+    <h1 class="logo" aria-label="Meio-Termo"><span>Meio<i>-</i></span><span>Termo</span></h1>
+    <p class="lead">Como candidatos a eleições no Brasil com rosto parecido com o seu declararam a própria cor ou raça.</p>
+    <p class="cadeado">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="1"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      A foto fica no seu aparelho. Nada é enviado.
+    </p>
+  </header>
+
+  <section class="ferramenta" id="ferramenta" aria-live="polite">
+    <div class="moldura">
+      <label class="foto" for="foto" id="area-foto">
+        <div class="vazio" id="vazio">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4 21c0-4.4 3.6-7.5 8-7.5s8 3.1 8 7.5"/></svg>
+          Rosto de frente, luz boa,<br>uma pessoa só
+        </div>
+        <img id="previa" alt="" hidden>
+        <canvas id="retrato" width="480" height="480" aria-label="O rosto analisado" hidden></canvas>
+        <div class="carregando" id="status" hidden><span id="status-txt"></span><div class="progresso" id="prog" hidden><div></div></div></div>
+      </label>
+      <div class="erro" id="erro" hidden></div>
+      <label class="tecla" id="botao"><span id="botao-txt">Escolher foto</span><input id="foto" type="file" accept="image/*"></label>
+      <p class="dica">Selfie serve. Sem filtro, sem óculos escuros.</p>
+    </div>
+
+    <div class="boletim-area" id="resultado" hidden>
+      <div class="boletim" id="boletim">
+        <div class="cab"><b>Meio-Termo</b><span>boletim de rostos parecidos</span></div>
+        <hr>
+        <p>De cada 100 candidatos com rosto parecido com o seu, se declararam:</p>
+        <div class="linhas" id="linhas"></div>
+        <hr>
+        <div class="total"><span>Total</span><span>100</span></div>
+        <hr>
+        <div class="rodape">
+          <p id="nota-resultado"></p>
+          <p class="sem-confirma"><s>Confirma</s> não existe aqui</p>
+          <p>A declaração é de quem se declara.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="secao" id="regua-secao">
+  <header>
+    <span class="rotulo">Figura 1 do artigo, no seu bolso</span>
+    <h2>A régua</h2>
+  </header>
+  <div class="texto">
+    <p>Some a chance de parda com o dobro da chance de preta e você tem uma régua de 0 (branca) a 2 (preta). No artigo, cada histórico de declaração tem um lugar nela. <span class="laranja">Quem trocou de declaração entre eleições</span> ficou exatamente entre as categorias que usou.</p>
+    <p id="regua-voce" class="fraco">Escolha uma foto e o seu rosto aparece na régua.</p>
+  </div>
+  <figure class="figura" style="margin:0">
+    <div id="regua"></div>
+    <figcaption>Pontos: média de cada grupo no conjunto de teste (11 mil fotos de candidatos). Toque num ponto para ver os números. <b>Em laranja:</b> quem mudou de declaração entre 2016 e 2024.</figcaption>
+  </figure>
+</section>
+
+<section class="secao">
+  <header><span class="rotulo">Antes de levar a sério</span><h2>Como ler o boletim</h2></header>
+  <div class="colunas">
+    <div><h3>É sobre os outros</h3><p>Os números dizem como candidatos com rosto parecido com o seu declararam a própria cor. Não dizem qual é a sua cor, nem como outras pessoas te veem.</p></div>
+    <div><h3>É uma faixa</h3><p>Luz, ângulo e câmera mexem alguns pontos. Outra foto sua pode mudar uns 5. Trate o boletim como faixa, não como medida exata.</p></div>
+    <div><h3>Indígena é o mais frágil</h3><p>O modelo encontra só metade dos candidatos indígenas e se apoia em pinturas e adornos. Número baixo não quer dizer nada sobre a pessoa. Identidade indígena é autodeclaração e reconhecimento da comunidade.</p></div>
+  </div>
+</section>
+
+<section class="secao">
+  <header><span class="rotulo">Limites</span><h2>O que isso não diz</h2></header>
+  <div class="colunas">
+    <div><h3>Como os outros te veem</h3><p>O modelo aprendeu com a cor que cada candidato declarou sobre si. Não mede como outras pessoas, ou uma banca de heteroidentificação, classificariam você.</p></div>
+    <div><h3>Qual é a sua cor</h3><p>Cor declarada é escolha da pessoa. Entre candidatos que concorreram mais de uma vez, 27,7% mudaram a própria declaração.</p></div>
+    <div><h3>Uma resposta certa</h3><p>Nas fotos do TSE, o modelo do site acerta 74% (acurácia balanceada), e 65% entre pardos. Para muitos rostos, a resposta honesta é que a foto não decide.</p></div>
+  </div>
+  <div class="aviso">
+    <b>Não use para decidir nada sobre ninguém</b>
+    <p>Nem cotas, nem bancas, nem seleção. Com 75% de acerto e um rótulo que muda para 1 em cada 4 pessoas, não existe uso individual responsável.</p>
+  </div>
+</section>
+
+<section class="secao">
+  <header><span class="rotulo">Por dentro</span><h2>Como funciona</h2></header>
+  <ul class="lista">
+    <li>Base: 113 mil fotos coloridas de candidatos (TSE, 2018–2024) com a cor que cada um declarou. Só quem nunca mudou a declaração ensinou o modelo; quem mudou serviu para testar o meio-termo.</li>
+    <li>No seu aparelho, o rosto é detectado, alinhado pelos olhos e recortado do mesmo jeito que as fotos de treino. O modelo (8,4 MB) roda seis vezes com pequenas variações, e o boletim é a média.</li>
+    <li>Duas perguntas: branca, parda ou preta; e indígena ou não. O boletim junta as duas numa conta que soma 100.</li>
+    <li>Branca, parda e preta são tratadas como igualmente comuns. Na população não são: com as proporções do Censo, rostos ambíguos pendem mais para parda.</li>
+  </ul>
+  <div class="chamada">
+    <a class="tecla" href="artigo.html">Ler o artigo</a>
+    <span class="dica" style="text-align:left">Dados, método, resultados e limites.</span>
+  </div>
+</section>
+
+<footer class="colofao">
+  <p>Experimento de pesquisa com dados públicos do Repositório de Dados Eleitorais do TSE (candidatos e fotos, 2016–2024). <a href="artigo.pdf">Artigo em PDF</a> · <a href="https://github.com/jpierreribeiro/meio-termo">Código</a> · <a href="/">uruquim</a></p>
+  <p>Sobre o desenho: as teclas e o boletim vêm da urna eletrônica. A única cor é o laranja da tecla CORRIGE, e ela marca só quem mudou a própria declaração. Não há tecla CONFIRMA de propósito: o site mostra o que outros declararam e não confirma nada sobre você.</p>
+</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.min.js"></script>
+<script type="module">
+import { carregarModelos, lerFoto, analisar } from "./app.js";
+import { regua } from "./graficos.js";
+
+const $ = id => document.getElementById(id);
+regua($("regua"));
+
+// baixa o modelo em segundo plano assim que a página abre
+let progressoModelo = 0;
+const prontos = carregarModelos(p => { progressoModelo = p; });
+prontos.catch(e => console.error(e));
+
+function arredondar(p) {           // inteiros que somam 100 (maiores restos)
+  const base = p.map(v => Math.floor(v * 100)), resto = p.map((v, i) => v * 100 - base[i]);
+  let falta = 100 - base.reduce((a, b) => a + b, 0);
+  resto.map((r, i) => [r, i]).sort((a, b) => b[0] - a[0]).forEach(([, i]) => { if (falta-- > 0) base[i]++; });
+  return base;
+}
+function status(txt, progresso) {
+  $("status").hidden = !txt; $("status-txt").textContent = txt || "";
+  $("prog").hidden = progresso == null;
+  if (progresso != null) $("prog").firstElementChild.style.width = Math.round(progresso * 100) + "%";
+}
+function erro(txt) { $("erro").hidden = !txt; $("erro").textContent = txt || ""; }
+
+const MSG = {
+  sem_rosto: "Não encontrei um rosto nessa foto. Tente uma foto de frente, com o rosto inteiro visível e boa luz.",
+  varios_rostos: "Encontrei mais de um rosto. Use uma foto com uma pessoa só, ou recorte a foto antes.",
+  rosto_pequeno: "O rosto está pequeno demais na foto. Use uma foto mais próxima.",
+};
+
+let vez = 0;   // se a pessoa trocar de foto no meio da análise, só a última vale
+$("foto").addEventListener("change", async ev => {
+  const arq = ev.target.files?.[0];
+  ev.target.value = "";
+  if (!arq) return;
+  const minha = ++vez;
+  erro("");
+  const previa = $("previa");
+  if (previa.src) URL.revokeObjectURL(previa.src);
+  previa.src = URL.createObjectURL(arq);
+  previa.hidden = false; $("vazio").hidden = true; $("retrato").hidden = true;
+  $("botao-txt").textContent = "Trocar foto";
+  $("resultado").hidden = true; $("ferramenta").classList.remove("com-resultado");
+  try {
+    status("Analisando a foto…");
+    const espera = setInterval(() => { if (progressoModelo < 1) status("Preparando o modelo (só na primeira vez)…", progressoModelo); }, 300);
+    try { await prontos; } finally { clearInterval(espera); }
+    if (minha !== vez) return;
+    status("Analisando a foto…");
+    const img = await lerFoto(arq);
+    const r = await analisar(img, t => { if (minha === vez) status(t); });
+    if (minha !== vez) return;
+    status("");
+    if (r.erro) { erro(MSG[r.erro]); return; }
+    mostrar(r);
+  } catch (e) {
+    if (minha !== vez) return;
+    status("");
+    erro("Algo deu errado: " + (e?.message || e) + ". Tente outra foto ou outro navegador.");
+    console.error(e);
+  }
+});
+
+function mostrar({ prob, indigena, retrato, saturacao }) {
+  $("retrato").getContext("2d").clearRect(0, 0, 480, 480);
+  $("retrato").getContext("2d").putImageData(retrato, 0, 0);
+  $("retrato").hidden = false; $("previa").hidden = true;
+  // junta as duas saídas: indígena primeiro, o resto dividido entre branca/parda/preta
+  const NOMES = ["Branca", "Parda", "Preta", "Indígena"];
+  const p = [...prob.map(v => v * (1 - indigena)), indigena];
+  const o = arredondar(p).map((v, i) => ({ v, i })).sort((x, y) => y.v - x.v);
+  $("linhas").innerHTML = o.map((x, k) => `<div class="linha${k === 0 ? " top" : ""}">
+    <div class="t"><span>${NOMES[x.i]}</span><span class="n">${String(x.v).padStart(3, " ")}</span></div>
+    <div class="b"><div style="width:${x.v}%"></div></div></div>`).join("");
+  $("nota-resultado").textContent = saturacao < 12
+    ? "A foto parece estar em preto e branco. O modelo usa a cor da pele: este boletim não é confiável."
+    : "Outra foto sua pode mudar uns 5 pontos.";
+  $("resultado").hidden = false; $("ferramenta").classList.add("com-resultado");
+  const b = $("boletim");
+  b.classList.remove("imprimindo"); void b.offsetWidth; b.classList.add("imprimindo");
+  if (matchMedia("(max-width: 819px)").matches) $("resultado").scrollIntoView({ behavior: "smooth", block: "start" });
+
+  // a régua usa só branca/parda/preta, como a Figura 1 do artigo
+  const nota = prob[1] + 2 * prob[2];
+  regua($("regua"), { voce: nota });
+  $("regua-voce").classList.remove("fraco");
+  $("regua-voce").textContent = `O seu rosto ficou em ${nota.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} na régua.` +
+    (indigena >= 0.5 ? " A régua não tem lugar para indígena: veja o boletim." : "");
+}
+</script>
+</body>
+</html>

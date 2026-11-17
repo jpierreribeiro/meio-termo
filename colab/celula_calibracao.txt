@@ -1,0 +1,197 @@
+# ===== CÉLULA A (cole numa célula nova e rode) =====
+%%writefile /content/calibrar.py
+"""Calibra as probabilidades do modelo de 3 classes (branca/parda/preta).
+
+Por que: o fine-tuning usou label smoothing e pesos por classe, que distorcem as
+probabilidades. Para dizer "54%" com honestidade, entre as fotos em que o modelo diz ~54%,
+~54% precisam ser de fato daquela classe.
+
+Método: ajusta, na VALIDAÇÃO, uma temperatura T (achata/aguça) e um viés por classe b
+(corrige a preferência por classe vinda dos pesos): p = softmax(logits / T + b).
+Mede no TESTE antes e depois: NLL, Brier, ECE e diagrama de confiabilidade.
+
+Atenção: o treino tem as 3 classes em proporção parecida (amostragem), enquanto a
+população brasileira não (Censo 2022: ~45% parda, ~43% branca, ~10% preta). As
+probabilidades calibradas valem para essa mistura equilibrada; --prior-censo reajusta.
+
+Uso (Colab):
+  python calibrar.py --dados /content/dados --modelo "$SAIDA/ajuste_3classes/modelo.pt" \
+      --externo /content/dados/externo_adorno.csv --saida "$SAIDA/calibracao"
+"""
+import argparse
+import json
+from pathlib import Path
+
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import timm
+import torch
+from torch.utils.data import DataLoader
+
+import treino
+
+CLASSES = ["branca", "parda", "preta"]
+CENSO = np.array([0.435, 0.455, 0.102])  # Censo 2022, renormalizado para as 3 classes
+
+
+@torch.no_grad()
+def logits_de(modelo, df, raiz, dev, lote):
+    dl = DataLoader(treino.Rostos(df, raiz, treino.transformacoes(modelo, False)),
+                    batch_size=lote, num_workers=treino.WORKERS)
+    out = []
+    for x, _ in dl:
+        with torch.autocast(dev, enabled=dev == "cuda"):
+            out.append(modelo(x.to(dev)).float().cpu())
+    return torch.cat(out)
+
+
+def ajustar(logits, y):
+    """T e b minimizando a NLL na validação."""
+    log_t = torch.zeros(1, requires_grad=True)
+    b = torch.zeros(logits.shape[1], requires_grad=True)
+    opt = torch.optim.LBFGS([log_t, b], lr=0.1, max_iter=500)
+    yt = torch.as_tensor(np.asarray(y), dtype=torch.long)
+
+    def passo():
+        opt.zero_grad()
+        l = torch.nn.functional.cross_entropy(logits / log_t.exp() + b, yt)
+        l.backward()
+        return l
+    opt.step(passo)
+    return log_t.exp().item(), b.detach()
+
+
+def prob(logits, T=1.0, b=None, prior=None):
+    z = logits / T + (b if b is not None else 0)
+    p = torch.softmax(z, 1).numpy()
+    if prior is not None:  # troca o prior equilibrado do treino pelo da população
+        treino_prior = np.full(len(CLASSES), 1 / len(CLASSES))
+        p = p * prior / treino_prior
+        p /= p.sum(1, keepdims=True)
+    return p
+
+
+def metricas(p, y, bins=15):
+    n = len(y)
+    nll = float(-np.log(np.clip(p[np.arange(n), y], 1e-12, 1)).mean())
+    onehot = np.eye(p.shape[1])[y]
+    brier = float(((p - onehot) ** 2).sum(1).mean())
+    conf, pred = p.max(1), p.argmax(1)
+    ece = 0.0
+    for lo in np.linspace(0, 1, bins + 1)[:-1]:
+        m = (conf > lo) & (conf <= lo + 1 / bins)
+        if m.any():
+            ece += m.mean() * abs((pred[m] == y[m]).mean() - conf[m].mean())
+    return {"nll": round(nll, 4), "brier": round(brier, 4), "ece": round(float(ece), 4)}
+
+
+def diagrama(p_antes, p_depois, y, caminho):
+    fig, eixos = plt.subplots(1, len(CLASSES), figsize=(4 * len(CLASSES), 4), sharey=True)
+    bordas = np.linspace(0, 1, 11)
+    for k, (ax, c) in enumerate(zip(eixos, CLASSES)):
+        for p, nome, cor in [(p_antes, "antes", "#bbbbbb"), (p_depois, "calibrado", "#1f6feb")]:
+            idx = np.clip(np.digitize(p[:, k], bordas) - 1, 0, 9)
+            xs, ys = [], []
+            for i in range(10):
+                m = idx == i
+                if m.sum() >= 20:
+                    xs.append(p[m, k].mean())
+                    ys.append((y[m] == k).mean())
+            ax.plot(xs, ys, "o-", color=cor, label=nome)
+        ax.plot([0, 1], [0, 1], "--", color="#888", lw=1)
+        ax.set_title(f"P({c})")
+        ax.set_xlabel("probabilidade dita pelo modelo")
+    eixos[0].set_ylabel("frequência real no teste")
+    eixos[0].legend()
+    fig.suptitle("Diagrama de confiabilidade (perfeito = diagonal)")
+    fig.tight_layout()
+    fig.savefig(caminho, dpi=120)
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--dados", type=Path, required=True)
+    ap.add_argument("--modelo", type=Path, help="modelo.pt do fine-tuning (sem = só teste)")
+    ap.add_argument("--backbone", default="vit_base_patch16_clip_224.openai")
+    ap.add_argument("--externo", type=Path)
+    ap.add_argument("--saida", type=Path, required=True)
+    ap.add_argument("--lote", type=int, default=128)
+    ap.add_argument("--max-ambiguo", type=int, default=8000)
+    ap.add_argument("--por-classe", type=int, help="só para teste rápido")
+    args = ap.parse_args()
+
+    treino.CLASSES = treino.ORIGEM = CLASSES
+    treino.BACKBONE, treino.BINARIO, treino.ALVO = args.backbone, None, "parda"
+    args.saida.mkdir(parents=True, exist_ok=True)
+    dev = "cuda" if torch.cuda.is_available() else "cpu"
+
+    partes, amb = treino.carregar(args.dados, args.por_classe, 0)
+    amb = amb.sample(min(len(amb), args.max_ambiguo), random_state=0)
+    modelo = timm.create_model(args.backbone, pretrained=args.modelo is None,
+                               num_classes=len(CLASSES))
+    if args.modelo:
+        modelo.load_state_dict(torch.load(args.modelo, map_location="cpu"))
+    modelo = modelo.to(dev).eval()
+
+    print("calculando logits...", flush=True)
+    L = {s: logits_de(modelo, partes[s], args.dados, dev, args.lote) for s in ["val", "test"]}
+    y = {s: partes[s].raca.map(CLASSES.index).to_numpy() for s in ["val", "test"]}
+    T, b = ajustar(L["val"], y["val"])
+    print(f"\ntemperatura T = {T:.3f}   viés por classe b = "
+          f"{dict(zip(CLASSES, b.numpy().round(3)))}")
+
+    p0, p1 = prob(L["test"]), prob(L["test"], T, b)
+    r = {"T": T, "b": b.tolist(), "teste_antes": metricas(p0, y["test"]),
+         "teste_calibrado": metricas(p1, y["test"])}
+    print("\n=== teste: antes vs. calibrado (menor = melhor) ===")
+    print(pd.DataFrame({"antes": r["teste_antes"], "calibrado": r["teste_calibrado"]}).T)
+    diagrama(p0, p1, y["test"], args.saida / "confiabilidade.png")
+
+    # média das probabilidades calibradas por grupo: os ambíguos devem ficar "no meio"
+    def resumo(df, p, grupo):
+        t = pd.DataFrame(p, columns=CLASSES).assign(g=df[grupo].values)
+        t["nota_0a2"] = t.parda + 2 * t.preta   # 0 = branca, 1 = parda, 2 = preta
+        return (t.groupby("g").mean() * [100, 100, 100, 1]).round(
+            {"branca": 1, "parda": 1, "preta": 1, "nota_0a2": 2})
+
+    print("\n=== média das probabilidades calibradas (%), teste consistente ===")
+    print(resumo(partes["test"], p1, "raca").to_string())
+    pa = prob(logits_de(modelo, amb, args.dados, dev, args.lote), T, b)
+    top = amb.racas_historico.value_counts().head(6).index
+    m = amb.racas_historico.isin(top).values
+    print("\n=== idem, pessoas que mudaram de declaração ===")
+    print(resumo(amb[m], pa[m], "racas_historico").to_string())
+
+    if args.externo:
+        ext = pd.read_csv(args.externo)
+        ext = ext[ext.raca.isin(CLASSES) & (ext.saturacao >= 12)]
+        pe = prob(logits_de(modelo, ext, args.dados, dev, args.lote), T, b)
+        print("\n=== idem, teste externo ===")
+        print(resumo(ext, pe, "fonte").to_string())
+
+    print("\n=== com prior do Censo 2022 (população real, não a amostra equilibrada) ===")
+    pc = prob(L["test"], T, b, prior=CENSO)
+    print(resumo(partes["test"], pc, "raca").to_string())
+
+    # distribuição: quão "decididas" são as respostas para quem sempre se declarou parda
+    pp = p1[y["test"] == 1, 1]
+    print(f"\nP(parda) entre pardos consistentes: mediana {np.median(pp):.0%}, "
+          f"{(pp >= 0.7).mean():.0%} acima de 70%, {(pp < 0.3).mean():.0%} abaixo de 30%")
+
+    (args.saida / "calibracao.json").write_text(json.dumps(r, indent=2))
+    print(f"\nsalvo em {args.saida} (calibracao.json, confiabilidade.png)")
+
+
+if __name__ == "__main__":
+    main()
+
+
+# ===== CÉLULA B (outra célula nova, depois da A) =====
+%cd /content
+!python calibrar.py --dados /content/dados --modelo "$SAIDA/ajuste_3classes/modelo.pt" \
+    --externo /content/dados/externo_adorno.csv --saida "$SAIDA/calibracao" 2>&1 | grep -v Warning
+from IPython.display import Image
+Image(f"{SAIDA}/calibracao/confiabilidade.png")

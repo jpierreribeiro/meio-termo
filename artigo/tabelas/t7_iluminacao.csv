@@ -1,0 +1,8 @@
+Condição simulada,Acurácia balanceada (%),P(branca) média entre brancos (%),Mudança média na escala 0–2
+Original,"72,3","69,2","0,00"
+Metade da luz (−1 stop),"71,6","69,3","0,05"
+Um quarto da luz (−2 stops),"70,3","70,4","0,08"
+Dobro da luz (+1 stop),"71,7","68,4","0,08"
+Luz quente (amarelada),"71,9","66,6","0,05"
+Metade da luz e quente,"72,5","68,6","0,05"
+Luz fria (azulada),"71,9","68,0","0,04"

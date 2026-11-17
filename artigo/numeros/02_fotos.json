@@ -1,0 +1,42 @@
+{
+  "fotos_total": 187481,
+  "fotos_por_ano": {
+    "2016": 56960,
+    "2018": 3852,
+    "2020": 66811,
+    "2022": 3949,
+    "2024": 55909
+  },
+  "fotos_coloridas": 117703,
+  "coloridas_por_ano": {
+    "2016": 48,
+    "2018": 1954,
+    "2020": 56141,
+    "2022": 3918,
+    "2024": 55642
+  },
+  "coloridas_por_raca_consistencia": {
+    "amarela|mudou": 1286,
+    "amarela|consistente": 2339,
+    "branca|mudou": 12835,
+    "branca|consistente": 25372,
+    "indigena|mudou": 658,
+    "indigena|consistente": 3998,
+    "parda|mudou": 17471,
+    "parda|consistente": 25885,
+    "preta|mudou": 5762,
+    "preta|consistente": 22097
+  },
+  "pessoas_distintas_coloridas": 93385,
+  "split_por_pessoa": {
+    "test": 9438,
+    "train": 74793,
+    "val": 9154
+  },
+  "split_fotos": {
+    "train": 94335,
+    "test": 11882,
+    "val": 11486
+  },
+  "dist_olhos_mediana_px": 32.1
+}

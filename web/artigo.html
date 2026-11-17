@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>O que o rosto diz · Meio-Termo</title>
+<meta name="description" content="O artigo por trás do Meio-Termo: quanto uma foto do rosto informa sobre a cor ou raça autodeclarada, com 1,57 milhão de candidaturas do TSE.">
+<meta name="theme-color" content="#f1ece1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#171612" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%231b1a17'/%3E%3Crect x='7' y='14' width='18' height='5' fill='%23e0661f'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="stylesheet" href="estilo.css">
+<style>
+.titulo-artigo { font: 900 clamp(2.6rem, 11vw, 6rem)/.9 var(--f-titulo); font-stretch: 65%; text-transform: uppercase; letter-spacing: -.01em; max-width: 14ch; }
+.subtitulo { font: italic 400 clamp(1.1rem, 3.4vw, 1.35rem)/1.45 var(--f-texto); max-width: 46ch; color: var(--tinta-2); }
+.achados { display: grid; gap: 3.5rem; }
+@media (min-width: 900px) { .achado.lado { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 2.5rem; align-items: start; } }
+.achado .corpo { display: grid; gap: .8rem; }
+.achado h3 { font-size: clamp(1.4rem, 4.6vw, 1.9rem); font-stretch: 75%; font-weight: 800; text-transform: uppercase; }
+.pilha { display: flex; height: 34px; gap: 2px; }
+.pilha div { display: grid; place-items: center; font: 600 .78rem var(--f-mono); color: var(--recibo); min-width: 0; overflow: hidden; white-space: nowrap; }
+.pilha-legenda { display: flex; flex-wrap: wrap; gap: .3rem 1.2rem; font: 400 .8rem var(--f-mono); color: var(--tinta-2); }
+.pilha-legenda i { display: inline-block; width: .75rem; height: .75rem; margin-right: .35rem; vertical-align: -1px; }
+.versus { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--linha); }
+.versus > div { background: var(--recibo); padding: 1rem; display: grid; gap: .2rem; }
+.versus b { font: 800 2.2rem/1 var(--f-titulo); font-stretch: 70%; }
+.versus span { font: 400 .78rem/1.45 var(--f-mono); color: var(--tinta-2); }
+details summary { cursor: pointer; font: 500 .8rem var(--f-mono); text-transform: uppercase; letter-spacing: .06em; }
+details[open] summary { margin-bottom: .8rem; }
+</style>
+</head>
+<body>
+<div class="pagina">
+
+<nav class="nav" aria-label="Principal">
+  <a class="marca" href="./">Meio<i>-</i>Termo</a>
+  <ul><li><a href="./">Ferramenta</a></li><li><a href="artigo.html" aria-current="page">O artigo</a></li></ul>
+</nav>
+
+<header class="abertura">
+  <span class="rotulo">Artigo · NBR 6022 · versão de novembro de 2026, em revisão · <a href="artigo.pdf">baixar PDF</a></span>
+  <h1 class="titulo-artigo">O que o rosto diz sobre a cor declarada</h1>
+  <p class="subtitulo">Um modelo probabilístico treinado com fotografias de candidatos às eleições brasileiras (2016–2024)</p>
+</header>
+
+<div class="numeros" role="list">
+  <div class="numero" role="listitem"><b>1.569.137</b><span>candidaturas do TSE, de 2016 a 2024</span></div>
+  <div class="numero destaque" role="listitem"><b>27,7%</b><span>de quem concorreu mais de uma vez mudou a própria cor declarada</span></div>
+  <div class="numero" role="listitem"><b>75,0%</b><span>de acurácia balanceada entre branca, parda e preta (IC 95%: 74,0–76,0%). É o teto.</span></div>
+  <div class="numero" role="listitem"><b>96,8%</b><span>das fotos de quem mudou caíram numa cor que a pessoa já tinha declarado</span></div>
+</div>
+
+<section class="secao">
+  <header><span class="rotulo">A pergunta</span><h2>Quanto uma foto informa sobre a declaração?</h2></header>
+  <div class="texto">
+    <p>No Brasil, a cor ou raça é autodeclarada, e a mesma pessoa pode se declarar de formas diferentes ao longo do tempo. O estudo usa as bases públicas do Tribunal Superior Eleitoral para medir quanto uma fotografia do rosto informa sobre essa declaração.</p>
+    <p>A resposta curta: informa bastante, mas até um limite dado pela própria variação das declarações. O resultado é uma distribuição, não um veredito.</p>
+  </div>
+</section>
+
+<section class="secao">
+  <header><span class="rotulo">Resultados</span><h2>Cinco achados</h2></header>
+  <div class="achados">
+
+    <article class="achado lado">
+      <div class="corpo">
+        <span class="n">01 · A declaração muda</span>
+        <h3>Um em cada quatro trocou de cor</h3>
+        <p>Das 290.724 pessoas que concorreram em pelo menos duas eleições, 80.584 declararam cores diferentes em algum momento. A troca quase sempre foi para uma categoria vizinha.</p>
+      </div>
+      <figure class="figura" style="margin:0">
+        <div class="pilha" role="img" aria-label="Entre quem mudou: 67,3% alternou entre branca e parda, 25,8% entre parda e preta, 2,6% entre branca e preta, 4,3% outras combinações">
+          <div style="flex:67.3;background:var(--laranja)">67,3%</div>
+          <div style="flex:25.8;background:var(--laranja-txt)">25,8%</div>
+          <div style="flex:2.6;background:var(--tinta)"></div>
+          <div style="flex:4.3;background:var(--tinta-3)"></div>
+        </div>
+        <div class="pilha-legenda">
+          <span><i style="background:var(--laranja)"></i>branca ↔ parda</span>
+          <span><i style="background:var(--laranja-txt)"></i>parda ↔ preta</span>
+          <span><i style="background:var(--tinta)"></i>branca ↔ preta · 2,6%</span>
+          <span><i style="background:var(--tinta-3)"></i>outras · 4,3%</span>
+        </div>
+        <figcaption>Entre as 80.584 pessoas que mudaram de declaração entre 2016 e 2024. Fonte: candidaturas do TSE.</figcaption>
+      </figure>
+    </article>
+
+    <article class="achado lado">
+      <div class="corpo">
+        <span class="n">02 · O teto</span>
+        <h3>75% e não sai disso</h3>
+        <p>Um CLIP ViT-B/16 ajustado com 113 mil fotos chegou a 75,0% de acurácia balanceada. Uma sonda linear sobre o mesmo modelo congelado já dava 73,6%. Quando o modelo inteiro ganha tão pouco sobre a sonda, o limite está no rótulo, não na arquitetura.</p>
+        <p>Os erros ficam entre vizinhas. Branca virar preta, ou o contrário, aconteceu em menos de 2% das fotos. Parda é a classe mais difícil (65,7%).</p>
+      </div>
+      <figure class="figura" style="margin:0">
+        <table class="matriz" id="matriz"></table>
+        <figcaption><b>Matriz de confusão</b> do professor calibrado. Linha = cor declarada; coluna = classe mais provável; % da linha e número de fotos. 7.339 fotos de teste de pessoas com declaração estável.</figcaption>
+      </figure>
+    </article>
+
+    <article class="achado">
+      <div class="corpo texto">
+        <span class="n">03 · Uma escala, não três caixas</span>
+        <h3>Quem trocou ficou no meio</h3>
+        <p>Some a probabilidade de parda com o dobro da de preta e cada foto ganha um lugar numa régua de 0 a 2. Os grupos se ordenaram sozinhos: sempre brancas em 0,32, sempre pardas em 0,97, sempre pretas em 1,66. <span class="laranja">Quem alternou entre branca e parda ficou em 0,63; entre parda e preta, em 1,45.</span> O modelo nunca viu essas pessoas no treino.</p>
+      </div>
+      <figure class="figura" style="margin:0">
+        <div id="escala"></div>
+        <figcaption>Ponto = média da escala; traço = ±1 desvio padrão. Em laranja, quem mudou de declaração. Os dois grupos mais claros são pequenos (85 e 44 fotos). Conjunto de teste.</figcaption>
+        <details>
+          <summary>Ver como tabela</summary>
+          <div class="tabela-rolagem"><table class="tabela" id="tabela-escala"></table></div>
+        </details>
+      </figure>
+    </article>
+
+    <article class="achado lado">
+      <div class="corpo">
+        <span class="n">04 · Nenhuma distribuição é neutra</span>
+        <h3>A mesma foto, duas respostas</h3>
+        <p>As probabilidades são calibradas: quando o modelo diz 60%, ele acerta em cerca de 60% das fotos. Mas 60% de quê depende da população de referência. Com as proporções do Censo de 2022, em que pretos são cerca de 10%, a resposta para as mesmas fotos muda bastante.</p>
+        <p>As duas estão certas para perguntas diferentes. Qualquer uso desses números precisa dizer qual é a população.</p>
+      </div>
+      <figure class="figura" style="margin:0">
+        <div class="versus">
+          <div><span>Classes com o mesmo peso</span><b>70,7%</b><span>preta · 24,0% parda</span></div>
+          <div><span>Proporções do Censo 2022</span><b>47,5%</b><span>preta · 42,9% parda</span></div>
+        </div>
+        <figcaption>Probabilidade média dada às fotos de pessoas que sempre se declararam pretas, sob cada população de referência.</figcaption>
+      </figure>
+    </article>
+
+    <article class="achado lado">
+      <div class="corpo">
+        <span class="n">05 · Indígena</span>
+        <h3>Acerta quando aponta, mas não encontra metade</h3>
+        <p>A detecção de autodeclaração indígena teve AUC de 0,92. Das fotos que o modelo apontou como indígenas, 84% eram de fato. Mas ele encontrou só 54% das pessoas indígenas. Tudo indica que ele se apoia em pinturas e adornos; essa hipótese ainda vai ser medida.</p>
+        <p>Identidade indígena é autodeclaração e reconhecimento da comunidade. Um rosto não a define.</p>
+      </div>
+      <figure class="figura" style="margin:0">
+        <div class="versus">
+          <div><span>Precisão</span><b>83,8%</b><span>das fotos apontadas eram de indígenas</span></div>
+          <div><span>Revocação</span><b>53,8%</b><span>das pessoas indígenas foram encontradas</span></div>
+        </div>
+        <figcaption>Professor calibrado, limiar de 50%. 11.376 fotos de teste, 424 de pessoas sempre indígenas (3,7%).</figcaption>
+      </figure>
+    </article>
+  </div>
+</section>
+
+<section class="secao">
+  <header><span class="rotulo">Do artigo para o bolso</span><h2>O modelo do site</h2></header>
+  <div class="colunas">
+    <div><h3>8,4 MB</h3><p>Um MobileNetV3 aprendeu a imitar as probabilidades do modelo grande (destilação). Perdeu 0,8 ponto: 74,2% de acurácia balanceada, e roda inteiro no navegador.</p></div>
+    <div><h3>Seis olhadas</h3><p>Espelhar a foto mudava a resposta em quase 10 pontos em 1 de cada 10 fotos. O site calcula a média de seis variações de cada foto: três escalas, com e sem espelho.</p></div>
+    <div><h3>Luz pesa pouco</h3><p>Na simulação, metade ou o dobro da luz, luz quente ou fria, mexeram a régua de 0 a 2 em 0,04 a 0,08. Sombra, contraluz e filtro de aplicativo ainda não foram testados.</p></div>
+  </div>
+  <div class="tabela-rolagem">
+    <table class="tabela">
+      <thead><tr><th>Modelo</th><th>Acurácia bal.</th><th>Revocação parda</th><th>ECE</th></tr></thead>
+      <tbody>
+        <tr><td>Sonda linear (CLIP ViT-B/16 congelado)¹</td><td>73,6%</td><td>62,1%</td><td>–</td></tr>
+        <tr><td>Professor ViT-B/16, sem calibrar</td><td>74,8%</td><td>62,3%</td><td>2,6%</td></tr>
+        <tr><td>Professor ViT-B/16, calibrado</td><td>75,0%</td><td>65,7%</td><td>2,6%</td></tr>
+        <tr><td>Aluno MobileNetV3 (o do site)</td><td>74,2%</td><td>65,8%</td><td>1,7%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="dica" style="text-align:left">¹ Execução registrada na GPU, com um recorte de teste que pode diferir um pouco das outras linhas.</p>
+</section>
+
+<section class="secao">
+  <header><span class="rotulo">Limites</span><h2>O que o estudo não mostra</h2></header>
+  <ul class="lista">
+    <li><b>Como os outros veem a pessoa.</b> O rótulo é autodeclaração. Heteroidentificação é outra pergunta e pediria várias avaliações independentes por foto.</li>
+    <li><b>A população brasileira.</b> São candidatos, com outro perfil de idade, escolaridade e região.</li>
+    <li><b>Fotos de celular.</b> As fotos oficiais são frontais e bem iluminadas. O desempenho no teste não informa sobre sombra, contraluz ou filtro.</li>
+    <li><b>Pessoas, de forma exata.</b> A ligação entre eleições usa nome e data de nascimento, porque o CPF não é público. Os erros dessa ligação não foram medidos.</li>
+    <li><b>Amarela.</b> Ficou fora dos modelos, por ter poucos exemplos.</li>
+  </ul>
+  <div class="aviso">
+    <b>Não serve para decidir sobre pessoas</b>
+    <p>Com 75% de acerto, parda em 66% e um rótulo que muda para 1 em cada 4 pessoas, o modelo não deve ser usado em seleção, verificação de cotas, bancas de heteroidentificação ou qualquer decisão individual.</p>
+  </div>
+</section>
+
+<section class="secao">
+  <header><span class="rotulo">Método em uma tela</span><h2>Como foi feito</h2></header>
+  <ol class="lista">
+    <li><b>Rótulos:</b> 1.569.137 candidaturas (2016–2024). Pessoa = nome normalizado + data de nascimento.</li>
+    <li><b>Fotos:</b> 113.491 fotos coloridas (2018–2024), com o rosto detectado e alinhado pelos olhos. 2016 ficou fora porque saiu em escala de cinza.</li>
+    <li><b>Separação por pessoa:</b> treino, validação e teste (80/10/10). A mesma pessoa nunca aparece em dois conjuntos.</li>
+    <li><b>Só declarações estáveis no treino.</b> Quem mudou serviu só para testar.</li>
+    <li><b>Modelos:</b> CLIP ViT-B/16 ajustado (professor), calibrado por temperatura, e destilado num MobileNetV3 (aluno) para o navegador.</li>
+    <li><b>Ética:</b> dados públicos, mas sensíveis (LGPD, art. 11). Os recortes não são redistribuídos, nenhum rosto aparece no artigo e todos os números são agregados.</li>
+  </ol>
+  <div class="chamada">
+    <a class="tecla" href="./">Testar com uma foto</a>
+    <span class="dica" style="text-align:left">A foto não sai do seu aparelho.</span>
+  </div>
+</section>
+
+<footer class="colofao">
+  <p>Dados: Repositório de Dados Eleitorais do TSE (candidatos e fotos, 2016–2024) e UTKFace (teste externo). Todos os números vêm do conjunto de teste e estão rastreados no artigo.</p>
+  <p>Por Jean Pierre Ribeiro dos Santos. <a href="artigo.pdf">Artigo em PDF</a> · <a href="https://github.com/jpierreribeiro/meio-termo">Código</a> · <a href="/">uruquim</a></p>
+  <p>Sobre o desenho: as teclas e o boletim vêm da urna eletrônica. A única cor é o laranja da tecla CORRIGE, e ela marca só quem mudou a própria declaração.</p>
+</footer>
+</div>
+
+<script type="module">
+import { escala, matriz, GRUPOS } from "./graficos.js";
+escala(document.getElementById("escala"));
+matriz(document.getElementById("matriz"));
+const f = (v, d) => v.toLocaleString("pt-BR", { minimumFractionDigits: d, maximumFractionDigits: d });
+document.getElementById("tabela-escala").innerHTML =
+  `<thead><tr><th>Declarações (2016–2024)</th><th>Fotos</th><th>P(branca)</th><th>P(parda)</th><th>P(preta)</th><th>Escala (DP)</th></tr></thead><tbody>` +
+  GRUPOS.map(g => `<tr class="${g.mudou ? "mudou" : ""}"><td>${g.nome}</td><td>${g.n.toLocaleString("pt-BR")}</td><td>${f(g.p[0], 1)}%</td><td>${f(g.p[1], 1)}%</td><td>${f(g.p[2], 1)}%</td><td>${f(g.m, 2)} (${f(g.dp, 2)})</td></tr>`).join("") + `</tbody>`;
+</script>
+</body>
+</html>

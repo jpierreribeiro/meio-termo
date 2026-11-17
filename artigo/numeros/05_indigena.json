@@ -1,0 +1,24 @@
+{
+  "n_teste": 11376,
+  "indigenas_teste": 424,
+  "prevalencia_pct": 3.73,
+  "auc": 0.919057495314029,
+  "recall_05": 0.5377358490566038,
+  "precisao_05": 0.8382352941176471,
+  "ece_sem_calibrar": 0.2458388084826045,
+  "ece_calibrado": 0.004712962355300974,
+  "calibracao": {
+    "T": 0.6274457573890686,
+    "b": [
+      1.4079943895339966,
+      -1.4079945087432861
+    ]
+  },
+  "p_indigena_media_por_grupo_teste": {
+    "indígena consistente": 53.2,
+    "mudou indígena/outra": 18.9,
+    "sempre branca": 1.2,
+    "sempre parda": 2.3,
+    "sempre preta": 1.7
+  }
+}

@@ -1,0 +1,7 @@
+-> 01_base_tse.json
+-> 02_fotos.json
+-> 03_professor_3classes.json
+-> 04_nota_por_historico.csv
+-> 05_indigena.json
+-> 06_aluno.json
+-> 07_utkface.json

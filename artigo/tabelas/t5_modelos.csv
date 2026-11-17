@@ -1,0 +1,5 @@
+Modelo,Acurácia balanceada (%),Revocação parda (%),Precisão parda (%),ECE (%),NLL
+Sonda linear (CLIP ViT-B/16 congelado)¹,"73,6","62,1","64,1",–,–
+"Professor ViT-B/16 ajustado, sem calibrar","74,8","62,3","66,0","2,6","0,601"
+"Professor ViT-B/16 ajustado, calibrado","75,0","65,7","65,6","2,6","0,591"
+"Aluno MobileNetV3 (site), com espelhamento","74,2","65,8","64,2","1,7","0,596"

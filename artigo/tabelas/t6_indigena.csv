@@ -1,0 +1,4 @@
+Modelo,AUC,Revocação em P ≥ 50% (%),Precisão em P ≥ 50% (%),ECE de P(indígena) (%)
+"Professor, sem calibrar","0,919",–,–,"24,6"
+"Professor, calibrado","0,919","53,8","83,8","0,5"
+"Aluno (site), com espelhamento","0,899","50,2","87,7","0,4"

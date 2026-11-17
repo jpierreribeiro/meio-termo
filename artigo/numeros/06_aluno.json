@@ -1,0 +1,49 @@
+{
+  "n_fotos_teste": 11458,
+  "saida_A_teste_consistentes": {
+    "n": 7339,
+    "acuracia_balanceada": 0.7424861014930935,
+    "recall": {
+      "branca": 0.777,
+      "parda": 0.6581,
+      "preta": 0.7923
+    },
+    "precisao": {
+      "branca": 0.7898,
+      "parda": 0.6419,
+      "preta": 0.8015
+    },
+    "matriz": [
+      [
+        1976,
+        546,
+        21
+      ],
+      [
+        487,
+        1721,
+        407
+      ],
+      [
+        39,
+        414,
+        1728
+      ]
+    ],
+    "ece": 0.01680741130306734,
+    "nll": 0.5957155823707581,
+    "brier": 0.35671716571089646
+  },
+  "concordancia_argmax_com_professor_pct": 90.48,
+  "dif_media_nota_vs_professor": 0.089,
+  "saida_B": {
+    "auc": 0.8991831422192209,
+    "recall_05": 0.5023584905660378,
+    "precisao_05": 0.8765432098765432,
+    "ece": 0.003973579386893644
+  },
+  "instabilidade_espelho_pontos": {
+    "mediana": 2.7,
+    "p90": 9.6
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "saidas": {
+    "A": {
+      "logits": [
+        0,
+        3
+      ],
+      "classes": [
+        "branca",
+        "parda",
+        "preta"
+      ]
+    },
+    "B": {
+      "logits": [
+        3,
+        5
+      ],
+      "classes": [
+        "outra",
+        "indigena"
+      ]
+    }
+  },
+  "lado": 160,
+  "media": [
+    0.485,
+    0.456,
+    0.406
+  ],
+  "desvio": [
+    0.229,
+    0.224,
+    0.225
+  ],
+  "aluno": "mobilenetv3_large_100",
+  "calibracao_indigena": {
+    "T": 0.6274457573890686,
+    "b": [
+      1.4079943895339966,
+      -1.4079945087432861
+    ]
+  },
+  "metricas": {
+    "prof3": {
+      "acuracia_balanceada": 0.7503,
+      "recall_parda": 0.657,
+      "precisao_parda": 0.6557,
+      "ece": 0.0264,
+      "nll": 0.5914
+    },
+    "aluno3": {
+      "acuracia_balanceada": 0.7418,
+      "recall_parda": 0.6547,
+      "precisao_parda": 0.6414,
+      "ece": 0.0173,
+      "nll": 0.5979
+    },
+    "ind_professor": {
+      "auc": 0.9191,
+      "recall": 0.5377,
+      "precisao": 0.8382,
+      "ece_p_indigena": 0.0047
+    },
+    "ind_aluno": {
+      "auc": 0.8958,
+      "recall": 0.5,
+      "precisao": 0.848,
+      "ece_p_indigena": 0.004
+    }
+  },
+  "entrada": "RGB 0-1, NCHW, recorte alinhado pelos olhos (OLHOS_Y 0.40, DIST_OLHOS 0.28, borda replicada)",
+  "leitura": "softmax separado em logits[0:3] (branca/parda/preta, prior igual) e logits[3:5] (outra/indigena, já calibrado, prevalência dos candidatos)"
+}

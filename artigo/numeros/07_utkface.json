@@ -1,0 +1,24 @@
+{
+  "n": {
+    "utk_preta": 1412,
+    "utk_branca": 1399
+  },
+  "media_pct": {
+    "utk_branca": {
+      "branca": 77.6,
+      "parda": 16.9,
+      "preta": 5.5,
+      "indigena": 1.3
+    },
+    "utk_preta": {
+      "branca": 5.7,
+      "parda": 17.2,
+      "preta": 77.1,
+      "indigena": 2.1
+    }
+  },
+  "acerto_argmax_pct": {
+    "utk_branca": 89.8,
+    "utk_preta": 89.4
+  }
+}
