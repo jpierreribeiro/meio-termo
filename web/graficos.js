@@ -36,8 +36,8 @@ function mostrarDica(html, ev) {
   dica.style.top = (y + dica.offsetHeight > innerHeight ? ev.clientY - dica.offsetHeight - 12 : y) + "px";
 }
 function esconderDica() { if (dica) dica.hidden = true; }
-const textoGrupo = g => `<b>${g.nome}</b><br>${fmtN(g.n)} fotos de teste<br>escala média ${fmt(g.m)} (DP ${fmt(g.dp)})<br>`
-  + `P média: branca ${fmt(g.p[0], 1)}% · parda ${fmt(g.p[1], 1)}% · preta ${fmt(g.p[2], 1)}%`;
+const textoGrupo = g => `<b>${g.nome}</b> (${fmtN(g.n)} fotos)<br>Em média, o modelo deu:<br>`
+  + `branca ${fmt(g.p[0], 0)}% · parda ${fmt(g.p[1], 0)}% · preta ${fmt(g.p[2], 0)}%`;
 function comDica(alvo, html) {
   alvo.addEventListener("pointerenter", ev => mostrarDica(html, ev));
   alvo.addEventListener("pointermove", ev => mostrarDica(html, ev));
@@ -66,7 +66,7 @@ export function regua(caixa, { voce = null } = {}) {
     const extraEst = [...linhaDe].some(([g, r]) => !g.mudou && r) ? 13 : 0;
     const yMud = y0 + 22 + extraMud, yEixo = yMud + 24, yEst = yEixo + 28, yNome = yEst + extraEst + 26, H = yNome + 8;
     const svg = el("svg", { class: "regua", viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: "img",
-      "aria-label": "Régua de 0 (branca) a 2 (preta) com a posição média de cada histórico de declaração" + (temVoce ? `; você em ${fmt(voce)}` : "") });
+      "aria-label": "Linha de branca a preta com a posição média de cada grupo de candidatos" + (temVoce ? "; com a posição do seu rosto" : "") });
     const defs = el("defs");
     const gr = el("linearGradient", { id: "gradiente-regua" });
     gr.append(el("stop", { offset: "0", "stop-color": "var(--r0)" }), el("stop", { offset: ".5", "stop-color": "var(--r1)" }), el("stop", { offset: "1", "stop-color": "var(--r2)" }));
@@ -92,7 +92,7 @@ export function regua(caixa, { voce = null } = {}) {
       const x = X(voce), a = x < 70 ? "start" : x > W - 70 ? "end" : "middle";
       svg.append(el("line", { x1: x, x2: x, y1: 16, y2: yEixo + 8, stroke: "var(--tinta)", "stroke-width": 2 }));
       svg.append(el("path", { class: "voce", d: `M${x - 7},${yEixo - 15} L${x + 7},${yEixo - 15} L${x},${yEixo - 5} Z` }));
-      svg.append(el("text", { class: "voce-txt", x: a === "start" ? x - 2 : a === "end" ? x + 2 : x, y: 11, "text-anchor": a }, `você · ${fmt(voce)}`));
+      svg.append(el("text", { class: "voce-txt", x: a === "start" ? x - 2 : a === "end" ? x + 2 : x, y: 11, "text-anchor": a }, "você"));
     }
     caixa.replaceChildren(svg);
   };

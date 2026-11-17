@@ -58,8 +58,7 @@
         <hr>
         <div class="rodape">
           <p id="nota-resultado"></p>
-          <p class="sem-confirma"><s>Confirma</s> não existe aqui</p>
-          <p>A declaração é de quem se declara.</p>
+          <p>Quem decide a sua cor é você.</p>
         </div>
       </div>
     </div>
@@ -68,65 +67,50 @@
 
 <section class="secao" id="regua-secao">
   <header>
-    <span class="rotulo">Figura 1 do artigo, no seu bolso</span>
-    <h2>A régua</h2>
+    <span class="rotulo">Onde você fica</span>
+    <h2>Entre branca e preta</h2>
   </header>
   <div class="texto">
-    <p>Some a chance de parda com o dobro da chance de preta e você tem uma régua de 0 (branca) a 2 (preta). No artigo, cada histórico de declaração tem um lugar nela. <span class="laranja">Quem trocou de declaração entre eleições</span> ficou exatamente entre as categorias que usou.</p>
-    <p id="regua-voce" class="fraco">Escolha uma foto e o seu rosto aparece na régua.</p>
+    <p>Muita gente não cabe numa categoria só. Na linha abaixo, cada ponto é um grupo de candidatos. Quem sempre se declarou parda fica no meio. <span class="laranja">Quem mudou de declaração</span> de uma eleição para outra fica entre as duas cores que usou.</p>
+    <p id="regua-voce" class="fraco">Escolha uma foto para ver onde o seu rosto aparece.</p>
   </div>
   <figure class="figura" style="margin:0">
     <div id="regua"></div>
-    <figcaption>Pontos: média de cada grupo no conjunto de teste (11 mil fotos de candidatos). Toque num ponto para ver os números. <b>Em laranja:</b> quem mudou de declaração entre 2016 e 2024.</figcaption>
+    <figcaption>Toque num ponto para ver os números do grupo.</figcaption>
   </figure>
 </section>
 
 <section class="secao">
-  <header><span class="rotulo">Antes de levar a sério</span><h2>Como ler o boletim</h2></header>
+  <header><span class="rotulo">Antes de levar a sério</span><h2>O que o resultado não diz</h2></header>
   <div class="colunas">
-    <div><h3>É sobre os outros</h3><p>Os números dizem como candidatos com rosto parecido com o seu declararam a própria cor. Não dizem qual é a sua cor, nem como outras pessoas te veem.</p></div>
-    <div><h3>É uma faixa</h3><p>Luz, ângulo e câmera mexem alguns pontos. Outra foto sua pode mudar uns 5. Trate o boletim como faixa, não como medida exata.</p></div>
-    <div><h3>Indígena é o mais frágil</h3><p>O modelo encontra só metade dos candidatos indígenas e se apoia em pinturas e adornos. Número baixo não quer dizer nada sobre a pessoa. Identidade indígena é autodeclaração e reconhecimento da comunidade.</p></div>
-  </div>
-</section>
-
-<section class="secao">
-  <header><span class="rotulo">Limites</span><h2>O que isso não diz</h2></header>
-  <div class="colunas">
-    <div><h3>Como os outros te veem</h3><p>O modelo aprendeu com a cor que cada candidato declarou sobre si. Não mede como outras pessoas, ou uma banca de heteroidentificação, classificariam você.</p></div>
-    <div><h3>Qual é a sua cor</h3><p>Cor declarada é escolha da pessoa. Entre candidatos que concorreram mais de uma vez, 27,7% mudaram a própria declaração.</p></div>
-    <div><h3>Uma resposta certa</h3><p>Nas fotos do TSE, o modelo do site acerta 74% (acurácia balanceada), e 65% entre pardos. Para muitos rostos, a resposta honesta é que a foto não decide.</p></div>
-  </div>
-  <div class="aviso">
-    <b>Não use para decidir nada sobre ninguém</b>
-    <p>Nem cotas, nem bancas, nem seleção. Com 75% de acerto e um rótulo que muda para 1 em cada 4 pessoas, não existe uso individual responsável.</p>
+    <div><h3>Não diz a sua cor</h3><p>Cor é autodeclarada: quem decide é a própria pessoa. O site só mostra como outras pessoas, com rosto parecido, responderam.</p></div>
+    <div><h3>Não é exato</h3><p>Luz, ângulo e câmera mudam o resultado. Outra foto sua pode dar números um pouco diferentes.</p></div>
+    <div><h3>Não serve para decidir</h3><p>O modelo erra 1 em cada 4 vezes. Não use em cotas, bancas ou qualquer decisão sobre alguém.</p></div>
   </div>
 </section>
 
 <section class="secao">
   <header><span class="rotulo">Por dentro</span><h2>Como funciona</h2></header>
   <ul class="lista">
-    <li>Base: 113 mil fotos coloridas de candidatos (TSE, 2018–2024) com a cor que cada um declarou. Só quem nunca mudou a declaração ensinou o modelo; quem mudou serviu para testar o meio-termo.</li>
-    <li>No seu aparelho, o rosto é detectado, alinhado pelos olhos e recortado do mesmo jeito que as fotos de treino. O modelo (8,4 MB) roda seis vezes com pequenas variações, e o boletim é a média.</li>
-    <li>Duas perguntas: branca, parda ou preta; e indígena ou não. O boletim junta as duas numa conta que soma 100.</li>
-    <li>Branca, parda e preta são tratadas como igualmente comuns. Na população não são: com as proporções do Censo, rostos ambíguos pendem mais para parda.</li>
+    <li>O modelo aprendeu com 113 mil fotos de candidatos das eleições de 2018 a 2024, que são públicas no site do TSE, junto com a cor que cada um declarou.</li>
+    <li>Tudo roda no seu celular ou computador. A foto não é enviada para lugar nenhum.</li>
+    <li>Para quem se declarou indígena, o modelo é bem menos confiável: reconhece só metade dos casos.</li>
   </ul>
   <div class="chamada">
     <a class="tecla" href="artigo.html">Ler o artigo</a>
-    <span class="dica" style="text-align:left">Dados, método, resultados e limites.</span>
+    <span class="dica" style="text-align:left">A pesquisa completa, com método e limites.</span>
   </div>
 </section>
 
 <footer class="colofao">
   <p>Experimento de pesquisa com dados públicos do Repositório de Dados Eleitorais do TSE (candidatos e fotos, 2016–2024). <a href="artigo.pdf">Artigo em PDF</a> · <a href="https://github.com/jpierreribeiro/meio-termo">Código</a> · <a href="/">uruquim</a></p>
-  <p>Sobre o desenho: as teclas e o boletim vêm da urna eletrônica. A única cor é o laranja da tecla CORRIGE, e ela marca só quem mudou a própria declaração. Não há tecla CONFIRMA de propósito: o site mostra o que outros declararam e não confirma nada sobre você.</p>
 </footer>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.min.js"></script>
 <script type="module">
 import { carregarModelos, lerFoto, analisar } from "./app.js";
-import { regua } from "./graficos.js";
+import { regua, GRUPOS } from "./graficos.js";
 
 const $ = id => document.getElementById(id);
 regua($("regua"));
@@ -201,7 +185,7 @@ function mostrar({ prob, indigena, retrato, saturacao }) {
     <div class="b"><div style="width:${x.v}%"></div></div></div>`).join("");
   $("nota-resultado").textContent = saturacao < 12
     ? "A foto parece estar em preto e branco. O modelo usa a cor da pele: este boletim não é confiável."
-    : "Outra foto sua pode mudar uns 5 pontos.";
+    : "Outra foto sua pode dar números um pouco diferentes.";
   $("resultado").hidden = false; $("ferramenta").classList.add("com-resultado");
   const b = $("boletim");
   b.classList.remove("imprimindo"); void b.offsetWidth; b.classList.add("imprimindo");
@@ -211,8 +195,9 @@ function mostrar({ prob, indigena, retrato, saturacao }) {
   const nota = prob[1] + 2 * prob[2];
   regua($("regua"), { voce: nota });
   $("regua-voce").classList.remove("fraco");
-  $("regua-voce").textContent = `O seu rosto ficou em ${nota.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} na régua.` +
-    (indigena >= 0.5 ? " A régua não tem lugar para indígena: veja o boletim." : "");
+  const perto = GRUPOS.filter(g => !g.raro).reduce((x, g) => Math.abs(g.m - nota) < Math.abs(x.m - nota) ? g : x);
+  $("regua-voce").textContent = `O seu rosto ficou mais perto do grupo "${perto.nome.toLowerCase()}".` +
+    (indigena >= 0.5 ? " A linha não inclui indígena; veja o resultado acima." : "");
 }
 </script>
 </body>
