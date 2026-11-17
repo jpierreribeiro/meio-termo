@@ -3,202 +3,167 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Meio-Termo</title>
-<meta name="description" content="Veja como candidatos a eleições com rosto parecido com o seu declararam a própria cor. A foto não sai do seu aparelho.">
-<meta name="theme-color" content="#f1ece1" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#171612" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%231b1a17'/%3E%3Crect x='7' y='14' width='18' height='5' fill='%23e0661f'/%3E%3C/svg%3E">
+<title>Qual é a sua cor? · Meio-Termo</title>
+<meta name="description" content="No Brasil, a cor é autodeclarada, e 1 em cada 4 candidatos mudou a própria resposta entre eleições. Testei o quanto uma foto do rosto consegue adivinhar essa resposta.">
+<meta property="og:title" content="Qual é a sua cor?">
+<meta property="og:description" content="1 em cada 4 candidatos mudou a cor declarada entre eleições. Até onde uma foto consegue adivinhar essa resposta? Teste com a sua; a foto não sai do aparelho.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://uruquim.com.br/meio-termo/">
+<meta name="theme-color" content="#fdfcfa">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23fdfcfa'/%3E%3Crect x='5' y='13' width='7' height='6' fill='%23d3cec3'/%3E%3Crect x='12' y='13' width='8' height='6' fill='%238c867a'/%3E%3Crect x='20' y='13' width='7' height='6' fill='%2333312c'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&family=Public+Sans:wght@400;600&display=swap">
 <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
-<div class="pagina">
 
-<nav class="nav" aria-label="Principal">
-  <a class="marca" href="./">Meio<i>-</i>Termo</a>
-  <ul><li><a href="./" aria-current="page">Ferramenta</a></li><li><a href="artigo.html">O artigo</a></li></ul>
-</nav>
+<header class="topo">
+  <a class="nome" href="/">Jean Pierre Ribeiro dos Santos</a>
+  <a href="/">Pesquisas</a>
+</header>
 
-<div class="abertura-grade">
+<main>
   <header class="abertura">
-    <h1 class="logo" aria-label="Meio-Termo"><span>Meio<i>-</i></span><span>Termo</span></h1>
-    <p class="lead">Como candidatos a eleições no Brasil com rosto parecido com o seu declararam a própria cor ou raça.</p>
-    <p class="cadeado">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="1"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-      A foto fica no seu aparelho. Nada é enviado.
-    </p>
+    <p class="chapeu">Dados do TSE · Inteligência artificial</p>
+    <h1>Qual é a sua cor?</h1>
+    <p class="linha-fina">No Brasil, quem responde é você. Mas a resposta muda mais do que parece, e uma foto do rosto diz menos do que se imagina.</p>
+    <p class="credito">Por <b>Jean Pierre Ribeiro dos Santos</b> · novembro de 2026 · 5 minutos de leitura</p>
   </header>
 
-  <section class="ferramenta" id="ferramenta" aria-live="polite">
-    <div class="moldura">
-      <label class="foto" for="foto" id="area-foto">
-        <div class="vazio" id="vazio">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4 21c0-4.4 3.6-7.5 8-7.5s8 3.1 8 7.5"/></svg>
-          Rosto de frente, luz boa,<br>uma pessoa só
-        </div>
-        <img id="previa" alt="" hidden>
-        <canvas id="retrato" width="480" height="480" aria-label="O rosto analisado" hidden></canvas>
-        <div class="carregando" id="status" hidden><span id="status-txt"></span><div class="progresso" id="prog" hidden><div></div></div></div>
-      </label>
-      <div class="erro" id="erro" hidden></div>
-      <label class="tecla" id="botao"><span id="botao-txt">Escolher foto</span><input id="foto" type="file" accept="image/*"></label>
-      <p class="dica">Selfie serve. Sem filtro, sem óculos escuros.</p>
-    </div>
+  <div class="coluna">
+    <p>Toda vez que alguém se candidata a um cargo eletivo no Brasil, preenche um formulário no Tribunal Superior Eleitoral (TSE). Um dos campos é a cor ou raça, com as mesmas cinco opções do IBGE: branca, preta, parda, amarela e indígena. Ninguém confere. A resposta é do candidato.</p>
+    <p>O TSE publica esses formulários, eleição após eleição. Como muita gente concorre mais de uma vez, dá para ver se a mesma pessoa respondeu sempre a mesma coisa.</p>
 
-    <div class="boletim-area" id="resultado" hidden>
-      <div class="boletim" id="boletim">
-        <div class="cab"><b>Meio-Termo</b><span>boletim de rostos parecidos</span></div>
-        <hr>
-        <p>De cada 100 candidatos com rosto parecido com o seu, se declararam:</p>
-        <div class="linhas" id="linhas"></div>
-        <hr>
-        <div class="total"><span>Total</span><span>100</span></div>
-        <hr>
-        <div class="rodape">
-          <p id="nota-resultado"></p>
-          <p>Quem decide a sua cor é você.</p>
+    <h2>A mesma pessoa, respostas diferentes</h2>
+    <p>Entre 2016 e 2024, quase 300 mil pessoas se candidataram em pelo menos duas eleições. <span class="marca">Mais de uma em cada quatro</span> mudou a cor declarada em algum momento.</p>
+
+    <figure class="surge">
+      <div class="cem" id="cem" role="img" aria-label="De 100 candidatos que concorreram mais de uma vez, 28 mudaram a cor declarada."></div>
+      <figcaption><b>Cada quadrado é um candidato.</b> De cada 100 que concorreram mais de uma vez, 28 (em azul) mudaram a cor declarada. Foram 80.584 pessoas de 290.724.</figcaption>
+    </figure>
+
+    <p>Quase sempre a troca foi entre cores vizinhas: de branca para parda, ou de parda para preta (e o caminho de volta). Trocar de branca para preta, ou o contrário, quase não aconteceu.</p>
+
+    <figure class="surge">
+      <div class="barra" role="img" aria-label="Das mudanças: 67% entre branca e parda, 26% entre parda e preta, 3% entre branca e preta, 4% outras.">
+        <div class="cx" style="--w:67.3%">branca ↔ parda 67%</div>
+        <div class="c1" style="--w:25.8%">parda ↔ preta 26%</div>
+        <div class="c2" style="--w:2.6%"></div>
+        <div class="cy" style="--w:4.3%"></div>
+      </div>
+      <figcaption><b>Entre quem mudou, de que cor para que cor.</b> Branca ↔ preta: 3%. Outras combinações, incluindo indígena e amarela: 4%.</figcaption>
+    </figure>
+
+    <p>Isso não é fraude nem confusão. A categoria parda é a maior do país (45% da população no Censo de 2022) e também a de fronteira mais difícil. Muita gente está, de verdade, no meio do caminho, e pode responder de um jeito numa eleição e de outro na seguinte.</p>
+
+    <h2>E se uma máquina olhasse a foto?</h2>
+    <p>O TSE também publica a foto de cada candidato, a mesma que aparece na urna. São fotos de frente, com fundo claro, de todos os estados. Juntei 113 mil delas, de 2018 a 2024, com a cor que cada pessoa declarou.</p>
+    <p>Com essas fotos, treinei um modelo de inteligência artificial para responder uma pergunta: <em>olhando só o rosto, dá para adivinhar o que a pessoa declarou?</em> Para não confundir o modelo, ele aprendeu só com quem nunca mudou de resposta. Depois, testei com pessoas que ele nunca tinha visto.</p>
+    <p class="grande">O resultado: o modelo acerta <span class="marca">3 de cada 4</span>.</p>
+    <p>Mais interessante do que quanto ele acerta é <em>onde</em> ele erra.</p>
+
+    <figure class="surge">
+      <ul class="legenda"><li><i class="c0"></i>previu branca</li><li><i class="c1"></i>previu parda</li><li><i class="c2"></i>previu preta</li></ul>
+      <div class="barras" role="img" aria-label="Acertos e erros por cor declarada.">
+        <div class="barra-linha"><span>Sempre branca</span><div class="barra"><div class="c0" style="--w:80.0%">80%</div><div class="c1" style="--w:19.3%">19%</div><div class="c2" style="--w:0.7%"></div></div></div>
+        <div class="barra-linha"><span>Sempre parda</span><div class="barra"><div class="c0" style="--w:18.5%">19%</div><div class="c1" style="--w:65.7%">66%</div><div class="c2" style="--w:15.8%">16%</div></div></div>
+        <div class="barra-linha"><span>Sempre preta</span><div class="barra"><div class="c0" style="--w:1.8%"></div><div class="c1" style="--w:18.8%">19%</div><div class="c2" style="--w:79.4%">79%</div></div></div>
+      </div>
+      <figcaption><b>O que o modelo respondeu, para cada cor declarada.</b> Fotos de 7.339 candidatos que ele nunca viu e que nunca mudaram de declaração.</figcaption>
+    </figure>
+
+    <p>Quando erra, ele erra para o vizinho, do mesmo jeito que as pessoas mudam de resposta. Confundir branca com preta aconteceu em menos de 2% das fotos. E a cor mais difícil para o modelo é justamente a parda: ele acerta 2 de cada 3.</p>
+
+    <h2>O erro tem a forma do meio-termo</h2>
+    <p>O modelo não responde só uma cor. Ele dá uma chance para cada uma, e dá para usar essas chances para colocar cada rosto numa linha que vai de branca a preta.</p>
+    <p>Quando faço isso com os candidatos, cada grupo cai num lugar. E quem mudou de declaração <span class="marca">fica exatamente entre as cores que usou</span>.</p>
+
+    <figure class="surge">
+      <svg class="grafico" id="linha" role="img" aria-label="Linha de branca a preta. Sempre branca à esquerda, depois branca e parda, sempre parda no meio, parda e preta, e sempre preta à direita."></svg>
+      <figcaption><b>Posição média de cada grupo na linha.</b> Em cinza, quem sempre declarou a mesma cor. Em azul, quem alternou entre duas cores.</figcaption>
+    </figure>
+
+    <p>Ou seja: a dúvida do modelo é parecida com a dúvida das próprias pessoas. Ele não falha por ser ruim. Ele bate num limite: se o mesmo rosto já respondeu duas cores diferentes, nenhuma foto vai acertar sempre. Testei também um modelo bem mais simples, e ele chegou quase no mesmo ponto. O limite está na pergunta, não na máquina.</p>
+  </div>
+
+  <section class="experimente" id="experimente">
+    <div class="intro">
+      <h2>Experimente com o seu rosto</h2>
+      <p>Mande uma foto sua. O modelo <strong>não vai dizer a sua cor</strong>, porque isso só você responde. Ele vai mostrar como candidatos com rosto parecido com o seu responderam.</p>
+    </div>
+    <div class="teste">
+      <div>
+        <label class="quadro" for="foto" id="quadro">
+          <div class="vazio" id="vazio">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4 21c0-4.4 3.6-7.5 8-7.5s8 3.1 8 7.5"/></svg>
+            Foto de frente,<br>com boa luz
+          </div>
+          <img id="previa" alt="" hidden>
+          <canvas id="retrato" width="480" height="480" aria-label="O rosto analisado" hidden></canvas>
+          <div class="carregando" id="status" hidden><span id="status-txt"></span><div class="progresso" id="prog" hidden><div></div></div></div>
+        </label>
+        <label class="botao"><span id="botao-txt">Escolher foto</span><input id="foto" type="file" accept="image/*"></label>
+        <p class="privado">A foto é analisada no seu próprio aparelho e não é enviada para lugar nenhum.</p>
+      </div>
+      <div aria-live="polite">
+        <div class="espera" id="espera">
+          <p>Para funcionar melhor:</p>
+          <ol>
+            <li>Rosto de frente, sem óculos escuros.</li>
+            <li>Luz boa, de preferência natural. Sombras fortes atrapalham.</li>
+            <li>Sem filtro de aplicativo.</li>
+            <li>Uma pessoa só na foto.</li>
+          </ol>
+        </div>
+        <p class="erro" id="erro" hidden></p>
+        <div class="resposta" id="resposta" hidden>
+          <p class="frase" id="frase"></p>
+          <div class="barra ja" id="barra-voce"></div>
+          <ul class="legenda" id="legenda-voce" style="margin-top:10px"></ul>
+          <p class="leitura" id="leitura"></p>
+          <p class="nota" id="nota"></p>
         </div>
       </div>
     </div>
   </section>
-</div>
 
-<section class="secao" id="regua-secao">
-  <header>
-    <span class="rotulo">Onde você fica</span>
-    <h2>Entre branca e preta</h2>
-  </header>
-  <div class="texto">
-    <p>Muita gente não cabe numa categoria só. Na linha abaixo, cada ponto é um grupo de candidatos. Quem sempre se declarou parda fica no meio. <span class="laranja">Quem mudou de declaração</span> de uma eleição para outra fica entre as duas cores que usou.</p>
-    <p id="regua-voce" class="fraco">Escolha uma foto para ver onde o seu rosto aparece.</p>
+  <div class="coluna">
+    <h2>O que isso não é</h2>
+    <p>Este modelo <strong>não diz qual é a cor de ninguém</strong>. Cor, no Brasil, é autodeclarada, e o próprio estudo mostra que a mesma pessoa pode responder diferente em momentos diferentes. O que o modelo aprendeu foi a relação entre o rosto e a resposta que outras pessoas deram.</p>
+    <p>Ele também <strong>não mede como os outros te veem</strong>. É uma pergunta diferente, que exigiria várias pessoas avaliando cada foto.</p>
+    <p>E ele <strong>não serve para decidir nada sobre ninguém</strong>, como em bancas de verificação de cotas. Errar 1 em cada 4 vezes, com uma resposta que muda para 1 em cada 4 pessoas, não permite isso. A ideia aqui é o contrário: mostrar por que uma foto não resolve essa pergunta.</p>
+    <p>Para quem se declarou indígena, o modelo é ainda mais limitado. Ele reconhece só cerca de metade dessas pessoas, e parece se apoiar em adornos e pinturas que aparecem em algumas fotos. Identidade indígena é autodeclaração e reconhecimento da comunidade, não aparência.</p>
+
+    <details>
+      <summary>Detalhes técnicos</summary>
+      <div class="dentro">
+        <p>O modelo principal é um CLIP ViT-B/16 ajustado com as fotos do TSE e calibrado para que as chances correspondam a frequências reais. O que roda no site é uma versão compacta (MobileNetV3, 8,4 MB), treinada para imitar o principal.</p>
+        <table>
+          <tr><th>Medida</th><th>Modelo principal</th><th>Modelo do site</th></tr>
+          <tr><td>Acurácia balanceada (branca, parda, preta)</td><td class="n">75,0% (IC 95%: 74,0–76,0)</td><td class="n">74,2%</td></tr>
+          <tr><td>Acerto entre quem se declara parda</td><td class="n">65,7%</td><td class="n">—</td></tr>
+          <tr><td>Indígena: AUC</td><td class="n">0,92</td><td class="n">0,90</td></tr>
+          <tr><td>Indígena: pessoas encontradas</td><td class="n">54%</td><td class="n">50%</td></tr>
+        </table>
+        <p>As fotos foram separadas por pessoa em treino, validação e teste, então nenhum candidato aparece em mais de um grupo. As chances do site valem para um grupo com as três cores em proporções iguais. Na proporção da população brasileira, rostos ambíguos pendem mais para parda.</p>
+        <p>O desempenho varia por região: o modelo acerta menos no Nordeste (67%) e mais no Sudeste (75%), o que combina com a ideia de que a fronteira entre branca e parda muda de um lugar para outro.</p>
+      </div>
+    </details>
+
+    <div class="links">
+      <a href="artigo.pdf">Ler o artigo completo (PDF)</a>
+      <a href="https://github.com/jpierreribeiro/meio-termo">Código no GitHub</a>
+      <a href="/">Outras pesquisas</a>
+    </div>
   </div>
-  <figure class="figura" style="margin:0">
-    <div id="regua"></div>
-    <figcaption>Toque num ponto para ver os números do grupo.</figcaption>
-  </figure>
-</section>
+</main>
 
-<section class="secao">
-  <header><span class="rotulo">Antes de levar a sério</span><h2>O que o resultado não diz</h2></header>
-  <div class="colunas">
-    <div><h3>Não diz a sua cor</h3><p>Cor é autodeclarada: quem decide é a própria pessoa. O site só mostra como outras pessoas, com rosto parecido, responderam.</p></div>
-    <div><h3>Não é exato</h3><p>Luz, ângulo e câmera mudam o resultado. Outra foto sua pode dar números um pouco diferentes.</p></div>
-    <div><h3>Não serve para decidir</h3><p>O modelo erra 1 em cada 4 vezes. Não use em cotas, bancas ou qualquer decisão sobre alguém.</p></div>
-  </div>
-</section>
-
-<section class="secao">
-  <header><span class="rotulo">Por dentro</span><h2>Como funciona</h2></header>
-  <ul class="lista">
-    <li>O modelo aprendeu com 113 mil fotos de candidatos das eleições de 2018 a 2024, que são públicas no site do TSE, junto com a cor que cada um declarou.</li>
-    <li>Tudo roda no seu celular ou computador. A foto não é enviada para lugar nenhum.</li>
-    <li>Para quem se declarou indígena, o modelo é bem menos confiável: reconhece só metade dos casos.</li>
-  </ul>
-  <div class="chamada">
-    <a class="tecla" href="artigo.html">Ler o artigo</a>
-    <span class="dica" style="text-align:left">A pesquisa completa, com método e limites.</span>
-  </div>
-</section>
-
-<footer class="colofao">
-  <p>Experimento de pesquisa com dados públicos do Repositório de Dados Eleitorais do TSE (candidatos e fotos, 2016–2024). <a href="artigo.pdf">Artigo em PDF</a> · <a href="https://github.com/jpierreribeiro/meio-termo">Código</a> · <a href="/">uruquim</a></p>
+<footer class="rodape">
+  Dados públicos do Repositório de Dados Eleitorais do TSE (candidaturas de 2016 a 2024 e fotos de 2018 a 2024). Nenhuma foto de candidato é exibida nesta página.
 </footer>
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.min.js"></script>
-<script type="module">
-import { carregarModelos, lerFoto, analisar } from "./app.js";
-import { regua, GRUPOS } from "./graficos.js";
-
-const $ = id => document.getElementById(id);
-regua($("regua"));
-
-// baixa o modelo em segundo plano assim que a página abre
-let progressoModelo = 0;
-const prontos = carregarModelos(p => { progressoModelo = p; });
-prontos.catch(e => console.error(e));
-
-function arredondar(p) {           // inteiros que somam 100 (maiores restos)
-  const base = p.map(v => Math.floor(v * 100)), resto = p.map((v, i) => v * 100 - base[i]);
-  let falta = 100 - base.reduce((a, b) => a + b, 0);
-  resto.map((r, i) => [r, i]).sort((a, b) => b[0] - a[0]).forEach(([, i]) => { if (falta-- > 0) base[i]++; });
-  return base;
-}
-function status(txt, progresso) {
-  $("status").hidden = !txt; $("status-txt").textContent = txt || "";
-  $("prog").hidden = progresso == null;
-  if (progresso != null) $("prog").firstElementChild.style.width = Math.round(progresso * 100) + "%";
-}
-function erro(txt) { $("erro").hidden = !txt; $("erro").textContent = txt || ""; }
-
-const MSG = {
-  sem_rosto: "Não encontrei um rosto nessa foto. Tente uma foto de frente, com o rosto inteiro visível e boa luz.",
-  varios_rostos: "Encontrei mais de um rosto. Use uma foto com uma pessoa só, ou recorte a foto antes.",
-  rosto_pequeno: "O rosto está pequeno demais na foto. Use uma foto mais próxima.",
-};
-
-let vez = 0;   // se a pessoa trocar de foto no meio da análise, só a última vale
-$("foto").addEventListener("change", async ev => {
-  const arq = ev.target.files?.[0];
-  ev.target.value = "";
-  if (!arq) return;
-  const minha = ++vez;
-  erro("");
-  const previa = $("previa");
-  if (previa.src) URL.revokeObjectURL(previa.src);
-  previa.src = URL.createObjectURL(arq);
-  previa.hidden = false; $("vazio").hidden = true; $("retrato").hidden = true;
-  $("botao-txt").textContent = "Trocar foto";
-  $("resultado").hidden = true; $("ferramenta").classList.remove("com-resultado");
-  try {
-    status("Analisando a foto…");
-    const espera = setInterval(() => { if (progressoModelo < 1) status("Preparando o modelo (só na primeira vez)…", progressoModelo); }, 300);
-    try { await prontos; } finally { clearInterval(espera); }
-    if (minha !== vez) return;
-    status("Analisando a foto…");
-    const img = await lerFoto(arq);
-    const r = await analisar(img, t => { if (minha === vez) status(t); });
-    if (minha !== vez) return;
-    status("");
-    if (r.erro) { erro(MSG[r.erro]); return; }
-    mostrar(r);
-  } catch (e) {
-    if (minha !== vez) return;
-    status("");
-    erro("Algo deu errado: " + (e?.message || e) + ". Tente outra foto ou outro navegador.");
-    console.error(e);
-  }
-});
-
-function mostrar({ prob, indigena, retrato, saturacao }) {
-  $("retrato").getContext("2d").clearRect(0, 0, 480, 480);
-  $("retrato").getContext("2d").putImageData(retrato, 0, 0);
-  $("retrato").hidden = false; $("previa").hidden = true;
-  // junta as duas saídas: indígena primeiro, o resto dividido entre branca/parda/preta
-  const NOMES = ["Branca", "Parda", "Preta", "Indígena"];
-  const p = [...prob.map(v => v * (1 - indigena)), indigena];
-  const o = arredondar(p).map((v, i) => ({ v, i })).sort((x, y) => y.v - x.v);
-  $("linhas").innerHTML = o.map((x, k) => `<div class="linha${k === 0 ? " top" : ""}">
-    <div class="t"><span>${NOMES[x.i]}</span><span class="n">${String(x.v).padStart(3, " ")}</span></div>
-    <div class="b"><div style="width:${x.v}%"></div></div></div>`).join("");
-  $("nota-resultado").textContent = saturacao < 12
-    ? "A foto parece estar em preto e branco. O modelo usa a cor da pele: este boletim não é confiável."
-    : "Outra foto sua pode dar números um pouco diferentes.";
-  $("resultado").hidden = false; $("ferramenta").classList.add("com-resultado");
-  const b = $("boletim");
-  b.classList.remove("imprimindo"); void b.offsetWidth; b.classList.add("imprimindo");
-  if (matchMedia("(max-width: 819px)").matches) $("resultado").scrollIntoView({ behavior: "smooth", block: "start" });
-
-  // a régua usa só branca/parda/preta, como a Figura 1 do artigo
-  const nota = prob[1] + 2 * prob[2];
-  regua($("regua"), { voce: nota });
-  $("regua-voce").classList.remove("fraco");
-  const perto = GRUPOS.filter(g => !g.raro).reduce((x, g) => Math.abs(g.m - nota) < Math.abs(x.m - nota) ? g : x);
-  $("regua-voce").textContent = `O seu rosto ficou mais perto do grupo "${perto.nome.toLowerCase()}".` +
-    (indigena >= 0.5 ? " A linha não inclui indígena; veja o resultado acima." : "");
-}
-</script>
+<script type="module" src="historia.js"></script>
 </body>
 </html>
