@@ -1,6 +1,6 @@
 // Gráficos da reportagem e a ligação da ferramenta com o modelo (app.js).
 // Números: artigo/tabelas/t3_confusao.csv e t4_escala.csv (professor calibrado, conjunto de teste).
-import { carregarModelos, lerFoto, analisar } from "./app.js";
+import { carregarModelos, lerFoto, analisar } from "./app.js?v=20261119c";
 
 const $ = id => document.getElementById(id);
 const NS = "http://www.w3.org/2000/svg";
@@ -89,10 +89,13 @@ const MSG = {
 };
 
 let vez = 0;   // se a pessoa trocar de foto no meio da análise, só a última vale
-$("foto").addEventListener("change", async ev => {
+async function aoEscolher(ev) {
   const arq = ev.target.files?.[0];
   ev.target.value = "";
-  if (!arq) return;
+  if (arq) processar(arq);
+}
+async function processar(arq) {
+  pararCamera();
   const minha = ++vez;
   erro("");
   const previa = $("previa");
@@ -100,7 +103,7 @@ $("foto").addEventListener("change", async ev => {
   previa.src = URL.createObjectURL(arq);
   previa.hidden = false; $("vazio").hidden = true; $("retrato").hidden = true;
   $("botao-txt").textContent = "Trocar foto";
-  $("resposta").hidden = true;
+  $("resposta").hidden = true; $("espera").hidden = true;
   try {
     status("Analisando a foto…");
     const espera = setInterval(() => { if (progressoModelo < 1) status("Preparando o modelo (só na primeira vez)…", progressoModelo); }, 300);
@@ -119,13 +122,61 @@ $("foto").addEventListener("change", async ev => {
     erro("Algo deu errado: " + (e?.message || e) + ". Tente outra foto ou outro navegador.");
     console.error(e);
   }
+}
+$("foto").addEventListener("change", aoEscolher);
+$("camera").addEventListener("change", aoEscolher);
+
+// ---------- câmera dentro da página ----------
+// O input com capture abre o app de câmera do sistema; no Android isso falha sem aviso
+// (permissão do Chrome) ou a aba é descartada enquanto a câmera está aberta. Por isso a
+// câmera roda aqui mesmo, com getUserMedia, e o input fica só como reserva.
+let fluxo = null;
+const video = $("video");
+function pararCamera() {
+  fluxo?.getTracks().forEach(t => t.stop()); fluxo = null;
+  video.srcObject = null; video.hidden = true;
+  $("btn-camera").textContent = "Tirar foto"; $("btn-cancelar").hidden = true;
+  $("quadro").classList.remove("ao-vivo");
+}
+async function abrirCamera() {
+  if (!navigator.mediaDevices?.getUserMedia) { $("camera").click(); return; }
+  erro("");
+  try {
+    fluxo = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user", width: { ideal: 1280 }, height: { ideal: 1280 } }, audio: false });
+  } catch (e) {
+    fluxo = null;
+    if (e?.name === "NotAllowedError" || e?.name === "SecurityError")
+      erro("O navegador não liberou a câmera. Toque no cadeado ao lado do endereço, permita a câmera e tente de novo, ou use “Escolher foto”.");
+    else if (e?.name === "NotFoundError" || e?.name === "OverconstrainedError")
+      erro("Não encontrei uma câmera neste aparelho. Use “Escolher foto”.");
+    else $("camera").click();
+    return;
+  }
+  video.srcObject = fluxo;
+  video.hidden = false; $("vazio").hidden = true; $("previa").hidden = true; $("retrato").hidden = true;
+  $("quadro").classList.add("ao-vivo");
+  $("btn-camera").textContent = "Capturar"; $("btn-cancelar").hidden = false;
+  try { await video.play(); } catch {}
+}
+function capturar() {
+  const w = video.videoWidth, h = video.videoHeight;
+  if (!w || !h) return;
+  const c = document.createElement("canvas"); c.width = w; c.height = h;
+  c.getContext("2d").drawImage(video, 0, 0, w, h);
+  c.toBlob(b => { if (b) processar(new File([b], "camera.jpg", { type: "image/jpeg" })); }, "image/jpeg", 0.92);
+}
+$("btn-camera").addEventListener("click", () => fluxo ? capturar() : abrirCamera());
+$("btn-cancelar").addEventListener("click", () => {
+  pararCamera();
+  const temFoto = !$("retrato").hidden || !!$("previa").getAttribute("src");
+  if (!temFoto) $("vazio").hidden = false;
+  else if ($("resposta").hidden) $("previa").hidden = false; else $("retrato").hidden = false;
 });
+// com a câmera aberta, tocar no quadro captura em vez de abrir o seletor de arquivos
+$("quadro").addEventListener("click", ev => { if (fluxo) { ev.preventDefault(); capturar(); } });
+document.addEventListener("visibilitychange", () => { if (document.hidden && fluxo) $("btn-cancelar").click(); });
 
 const COR = ["branca", "parda", "preta", "indígena"];
-const PLURAL = ["brancos", "pardos", "pretos", "indígenas"], SING = ["branco", "pardo", "preto", "indígena"];
-const gente = (k, i) => `${k} ${k === 1 ? SING[i] : PLURAL[i]}`;
-const CLASSE = ["c0", "c1", "c2", "c3"];
-const lista = xs => xs.length < 2 ? xs.join("") : xs.slice(0, -1).join(", ") + " e " + xs.at(-1);
 
 function mostrar({ prob, indigena, retrato, saturacao }) {
   const ctx = $("retrato").getContext("2d");
@@ -134,32 +185,29 @@ function mostrar({ prob, indigena, retrato, saturacao }) {
 
   // junta as duas saídas: indígena primeiro, o resto dividido entre branca/parda/preta
   const n = arredondar([...prob.map(v => v * (1 - indigena)), indigena]);
-  const ordem = [0, 1, 2, 3].filter(i => n[i] > 0).sort((a, b) => n[b] - n[a]);
-  const [p1, ...resto] = ordem;
-  $("frase").innerHTML = `De cada 100 candidatos com rosto parecido com o seu, <b>${n[p1]} se declararam ${PLURAL[p1]}</b>`
-    + (resto.length ? `, ${lista(resto.map(i => gente(n[i], i)))}.` : ".");
-  $("barra-voce").innerHTML = [0, 1, 2, 3].filter(i => n[i] > 0)
-    .map(i => `<div class="${CLASSE[i]}" style="--w:${n[i]}%">${n[i] >= 8 ? n[i] : ""}</div>`).join("");
-  $("legenda-voce").innerHTML = [0, 1, 2, 3].filter(i => n[i] > 0)
-    .map(i => `<li><i class="${CLASSE[i]}"></i>${COR[i]}</li>`).join("");
+  const ordem = [0, 1, 2, 3].sort((a, b) => n[b] - n[a]);
+  const [p1, p2] = ordem;
 
-  // leitura em palavras
-  const top = n[p1];
-  let txt = top >= 70 ? `A maioria respondeu igual. Mesmo assim, ${100 - top} de cada 100 escolheram outra cor.`
-    : top >= 50 ? "Mais da metade escolheu a mesma cor, mas uma parte grande respondeu diferente."
-    : "Ficou dividido: nenhuma cor chegou à metade. É o que acontece com muitos rostos, e é exatamente o meio-termo de que fala esta reportagem.";
-  const nota = prob[1] + 2 * prob[2];
+  // C: a resposta mais comum em destaque, com um selo para não ler "69%" como certeza
+  $("selo").textContent = n[p1] >= 70 ? "resultado claro" : n[p1] - n[p2] < 15 ? "resultado dividido" : "resultado provável, não certo";
+  $("grande").textContent = `${n[p1]}% ${COR[p1]}`;
+  $("outros").innerHTML = ordem.slice(1).filter(i => n[i] > 0).map(i => `<span>${COR[i]} <b>${n[i]}%</b></span>`).join("");
+
+  // D: régua de branca a preta (só as três cores, como no gráfico da reportagem)
+  const nota = prob[1] + 2 * prob[2], pos = Math.max(0, Math.min(2, nota)) / 2 * 100;
+  $("pino").style.left = pos + "%";
+  $("pino").firstElementChild.style.transform = `translateX(${pos < 12 ? -12 : pos > 88 ? -88 : -50}%)`;
+  $("regua").setAttribute("aria-label", `Na linha de branca a preta, o seu rosto ficou em ${Math.round(pos)}% do caminho.`);
   const perto = GRUPOS.reduce((x, g) => Math.abs(g.m - nota) < Math.abs(x.m - nota) ? g : x);
-  txt += ` Na linha de branca a preta, mais abaixo nesta página, o seu rosto ficou mais perto de quem ${perto.mudou ? `alternou entre ${perto.nome}` : perto.nome.replace("sempre ", "sempre se declarou ")}.`;
-  $("leitura").textContent = txt;
+  $("leitura").textContent = `Na linha de branca a preta, o seu rosto ficou mais perto de quem ${perto.mudou ? `alternou entre ${perto.nome}` : perto.nome.replace("sempre ", "sempre se declarou ")}.`;
 
   const notas = [];
   if (saturacao < 12) notas.push("A foto parece estar em preto e branco. O modelo depende da cor, então este resultado não é confiável.");
   if (indigena >= 0.3) notas.push("A parte indígena é a mais frágil do modelo: ele reconhece só metade dos candidatos indígenas.");
-  notas.push("Outra foto sua, com outra luz, pode dar números um pouco diferentes.");
+  notas.push("Outra foto sua, com outra luz, pode dar números um pouco diferentes. Quem decide a sua cor é você.");
   $("nota").textContent = notas.join(" ");
 
-  $("espera").hidden = true; $("resposta").hidden = false;
+  $("resposta").hidden = false;
   ultimaNota = nota; linha(svgLinha, nota);
   if (matchMedia("(max-width: 700px)").matches) $("resposta").scrollIntoView({ behavior: "smooth", block: "start" });
 }

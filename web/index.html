@@ -8,13 +8,13 @@
 <meta property="og:title" content="Qual é a sua cor?">
 <meta property="og:description" content="1 em cada 4 candidatos mudou a cor declarada entre eleições. Até onde uma foto consegue adivinhar essa resposta? Teste com a sua; a foto não sai do aparelho.">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://uruquim.com.br/meio-termo/">
+<meta property="og:url" content="https://www.jpierreribeiro.com.br/meio-termo/">
 <meta name="theme-color" content="#fdfcfa">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23fdfcfa'/%3E%3Crect x='5' y='13' width='7' height='6' fill='%23d3cec3'/%3E%3Crect x='12' y='13' width='8' height='6' fill='%238c867a'/%3E%3Crect x='20' y='13' width='7' height='6' fill='%2333312c'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&family=Public+Sans:wght@400;600&display=swap">
-<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="estilo.css?v=20261119c">
 </head>
 <body>
 
@@ -27,50 +27,50 @@
   <header class="abertura">
     <p class="chapeu">Dados do TSE · Inteligência artificial</p>
     <h1>Qual é a sua cor?</h1>
-    <p class="linha-fina">No Brasil, quem responde é você. Mas a resposta muda mais do que parece, e uma foto do rosto diz menos do que se imagina.</p>
-    <p class="credito">Por <b>Jean Pierre Ribeiro dos Santos</b> · novembro de 2026 · 5 minutos de leitura</p>
   </header>
 
   <section class="experimente" id="experimente">
-    <div class="intro">
-      <h2>Experimente com o seu rosto</h2>
-      <p>Mande uma foto sua. O modelo <strong>não vai dizer a sua cor</strong>, porque isso só você responde. Ele vai mostrar como candidatos com rosto parecido com o seu responderam.</p>
-    </div>
     <div class="teste">
-      <div>
-        <label class="quadro" for="foto" id="quadro">
-          <div class="vazio" id="vazio">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4 21c0-4.4 3.6-7.5 8-7.5s8 3.1 8 7.5"/></svg>
-            Foto de frente,<br>com boa luz
-          </div>
-          <img id="previa" alt="" hidden>
-          <canvas id="retrato" width="480" height="480" aria-label="O rosto analisado" hidden></canvas>
-          <div class="carregando" id="status" hidden><span id="status-txt"></span><div class="progresso" id="prog" hidden><div></div></div></div>
-        </label>
-        <label class="botao"><span id="botao-txt">Escolher foto</span><input id="foto" type="file" accept="image/*"></label>
-        <p class="privado">A foto é analisada no seu próprio aparelho e não é enviada para lugar nenhum.</p>
-      </div>
-      <div aria-live="polite">
-        <div class="espera" id="espera">
-          <p>Para funcionar melhor:</p>
-          <ol>
-            <li>Rosto de frente, sem óculos escuros.</li>
-            <li>Luz boa, de preferência natural. Sombras fortes atrapalham.</li>
-            <li>Sem filtro de aplicativo.</li>
-            <li>Uma pessoa só na foto.</li>
-          </ol>
+      <label class="quadro" for="foto" id="quadro">
+        <div class="vazio" id="vazio">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4 21c0-4.4 3.6-7.5 8-7.5s8 3.1 8 7.5"/></svg>
+          Foto de frente,<br>com boa luz
         </div>
-        <p class="erro" id="erro" hidden></p>
-        <div class="resposta" id="resposta" hidden>
-          <p class="frase" id="frase"></p>
-          <div class="barra ja" id="barra-voce"></div>
-          <ul class="legenda" id="legenda-voce" style="margin-top:10px"></ul>
-          <p class="leitura" id="leitura"></p>
-          <p class="nota" id="nota"></p>
-        </div>
+        <img id="previa" alt="" hidden>
+        <canvas id="retrato" width="480" height="480" aria-label="O rosto analisado" hidden></canvas>
+        <video id="video" playsinline muted autoplay hidden></video>
+        <div class="carregando" id="status" hidden><span id="status-txt"></span><div class="progresso" id="prog" hidden><div></div></div></div>
+      </label>
+      <div class="acoes">
+        <button type="button" class="botao camera" id="btn-camera">Tirar foto</button>
+        <input id="camera" class="escondido" type="file" accept="image/*" capture="user" tabindex="-1" aria-hidden="true">
+        <label class="botao" id="botao-foto"><span id="botao-txt">Escolher foto</span><input id="foto" type="file" accept="image/*"></label>
       </div>
+      <button type="button" class="cancelar" id="btn-cancelar" hidden>Cancelar</button>
+      <p class="dica" id="espera">Rosto de frente, boa luz, sem filtro e uma pessoa só.</p>
+      <p class="privado">O modelo <strong>não diz a sua cor</strong>: mostra como candidatos com rosto parecido com o seu responderam. A foto é analisada no seu aparelho e não é enviada para lugar nenhum.</p>
+      <p class="erro" id="erro" hidden></p>
+    </div>
+
+    <div class="resposta" id="resposta" aria-live="polite" hidden>
+      <span class="selo" id="selo"></span>
+      <p class="grande-res" id="grande"></p>
+      <p class="sub">foi a declaração mais comum entre candidatos com rosto parecido com o seu.</p>
+      <p class="outros" id="outros"></p>
+      <div class="regua" id="regua" role="img">
+        <div class="faixa"></div>
+        <div class="pino" id="pino"><b>você</b></div>
+        <div class="pontas"><span>branca</span><span>parda</span><span>preta</span></div>
+      </div>
+      <p class="leitura" id="leitura"></p>
+      <p class="nota" id="nota"></p>
     </div>
   </section>
+
+  <div class="coluna">
+    <p class="linha-fina">No Brasil, quem responde é você. Mas a resposta muda mais do que parece, e uma foto do rosto diz menos do que se imagina.</p>
+    <p class="credito">Por <b>Jean Pierre Ribeiro dos Santos</b> · novembro de 2026 · 5 minutos de leitura</p>
+  </div>
 
   <div class="coluna">
     <p>Toda vez que alguém se candidata a um cargo eletivo no Brasil, preenche um formulário no Tribunal Superior Eleitoral (TSE). Um dos campos é a cor ou raça, com as mesmas cinco opções do IBGE: branca, preta, parda, amarela e indígena. Ninguém confere. A resposta é do candidato.</p>
@@ -162,6 +162,6 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.min.js"></script>
-<script type="module" src="historia.js"></script>
+<script type="module" src="historia.js?v=20261119c"></script>
 </body>
 </html>

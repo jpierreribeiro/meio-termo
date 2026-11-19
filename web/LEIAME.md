@@ -17,7 +17,7 @@ Os números de index.html e historia.js foram copiados de artigo/tabelas/ e arti
 Se o artigo mudar, atualize os dois.
 
 Testar local:  cd web && python3 -m http.server 8765  ->  http://127.0.0.1:8765
-Publicado em https://uruquim.com.br/meio-termo/ (Railway, projeto uruquim). Para atualizar:
+Publicado em https://www.jpierreribeiro.com.br/meio-termo/ (Railway, projeto uruquim, serviço site). Para atualizar:
   cd ~/Documents/uruquim-site && ./sync.sh && railway up --service site --ci
 
 Referência em Python do mesmo pipeline: ../referencia_web.py (validada contra o recorte do treino).
