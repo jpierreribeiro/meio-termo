@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&family=Public+Sans:wght@400;600&display=swap">
-<link rel="stylesheet" href="estilo.css?v=20261119c">
+<link rel="stylesheet" href="estilo.css?v=20261119d">
 </head>
 <body>
 
@@ -127,6 +127,30 @@
 
     <p>Ou seja: a dúvida do modelo é parecida com a dúvida das próprias pessoas. Ele não falha por ser ruim. Ele bate num limite: se o mesmo rosto já respondeu duas cores diferentes, nenhuma foto vai acertar sempre. Testei também um modelo bem mais simples, e ele chegou quase no mesmo ponto. O limite está na pergunta, não na máquina.</p>
 
+    <h2>Como eu fiz</h2>
+    <p>Tudo o que entrou neste trabalho é público e saiu do site do TSE. O caminho, do começo ao fim, foi este.</p>
+
+    <figure class="surge">
+      <div class="funil" role="img" aria-label="De 1.569.137 candidaturas, 1.178.425 pessoas; 187.481 rostos recortados; 113.491 fotos usadas, sendo 77.352 de quem nunca mudou e 36.139 de quem mudou.">
+        <div class="funil-linha"><span>Candidaturas</span><div class="barra"><div class="c1" style="--w:100%"></div></div><b>1.569.137</b></div>
+        <div class="funil-linha"><span>Pessoas</span><div class="barra"><div class="c1" style="--w:75.1%"></div></div><b>1.178.425</b></div>
+        <div class="funil-linha"><span>Rostos recortados</span><div class="barra"><div class="c1" style="--w:11.95%"></div></div><b>187.481</b></div>
+        <div class="funil-linha"><span>Fotos usadas</span><div class="barra"><div class="c1" style="--w:4.93%"></div><div class="cx" style="--w:2.30%"></div></div><b>113.491</b></div>
+      </div>
+      <figcaption><b>Do formulário à foto.</b> Das fotos usadas, 77.352 são de quem sempre declarou a mesma cor (em cinza) e ensinaram o modelo. As 36.139 de quem mudou (em azul) ficaram de fora do treino e serviram só para o teste do meio-termo.</figcaption>
+    </figure>
+
+    <ol class="passos">
+      <li><b>Juntei as respostas.</b> Baixei os formulários de candidatura de 2016 a 2024: 1,57 milhão. O CPF não é público, então liguei a mesma pessoa entre eleições pelo nome e pela data de nascimento. Assim, cada candidato ganhou um histórico com todas as cores que já declarou.</li>
+      <li><b>Juntei as fotos.</b> O TSE publica a foto de urna de cada candidato, separada por estado e ano, e cada foto traz o número da candidatura. É esse número que liga a foto ao formulário. Não baixei todas: peguei uma parte de cada cor, para não acabar com uma montanha de fotos de brancos e pardos e poucas de pretos e indígenas.</li>
+      <li><b>Recortei os rostos.</b> Um detector automático encontrou o rosto em cada foto, endireitou a imagem pela linha dos olhos e recortou um quadrado, sempre com os olhos no mesmo lugar. Descartei fotos com mais de um rosto ou com o rosto pequeno demais. Também descartei as fotos em preto e branco, que são quase todas as de 2016. Sem cor, não há o que aprender.</li>
+      <li><b>Separei quem nunca mudou.</b> O modelo aprendeu só com fotos de pessoas que declararam sempre a mesma cor. Se alguém já respondeu parda e branca, não existe resposta certa para ensinar. Essas fotos ficaram guardadas para depois, e são elas que aparecem no meio da linha, lá em cima.</li>
+      <li><b>Separei por pessoa, não por foto.</b> Dividi as pessoas em três grupos: 80% para aprender, 10% para ajustar e 10% para a prova final. Quem concorreu várias vezes tem todas as fotos no mesmo grupo. Se não fosse assim, o modelo poderia reconhecer o candidato na prova, em vez de responder pela aparência.</li>
+      <li><b>Parti de um modelo que já sabia ver.</b> Em vez de começar do zero, usei o CLIP, um modelo de imagens já treinado com centenas de milhões de fotos, e o ajustei com as fotos do TSE, numa placa de vídeo do Google Colab. Durante o treino, não mexi na cor nem no brilho das fotos, que é um truque comum, porque a cor é justamente o que ele precisa ver.</li>
+      <li><b>Conferi se as chances são honestas.</b> Um modelo pode dizer “90%” e acertar bem menos que isso. Ajustei as respostas para que, quando ele diz 70%, aquilo aconteça de fato 7 em cada 10 vezes.</li>
+      <li><b>Coloquei no seu aparelho.</b> O modelo principal é grande demais para um navegador. Treinei um modelo pequeno, de 8 MB, para copiar as respostas do grande. Ele acerta quase o mesmo (74% contra 75%) e roda no seu celular ou computador, e por isso a sua foto não sai dele.</li>
+    </ol>
+
     <h2>O que isso não é</h2>
     <p>Este modelo <strong>não diz qual é a cor de ninguém</strong>. Cor, no Brasil, é autodeclarada, e o próprio estudo mostra que a mesma pessoa pode responder diferente em momentos diferentes. O que o modelo aprendeu foi a relação entre o rosto e a resposta que outras pessoas deram.</p>
     <p>Ele também <strong>não mede como os outros te veem</strong>. É uma pergunta diferente, que exigiria várias pessoas avaliando cada foto.</p>
@@ -162,6 +186,6 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.min.js"></script>
-<script type="module" src="historia.js?v=20261119c"></script>
+<script type="module" src="historia.js?v=20261119d"></script>
 </body>
 </html>

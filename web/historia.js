@@ -1,6 +1,6 @@
 // Gráficos da reportagem e a ligação da ferramenta com o modelo (app.js).
 // Números: artigo/tabelas/t3_confusao.csv e t4_escala.csv (professor calibrado, conjunto de teste).
-import { carregarModelos, lerFoto, analisar } from "./app.js?v=20261119c";
+import { carregarModelos, lerFoto, analisar } from "./app.js?v=20261119d";
 
 const $ = id => document.getElementById(id);
 const NS = "http://www.w3.org/2000/svg";
