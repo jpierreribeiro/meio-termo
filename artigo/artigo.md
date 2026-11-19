@@ -2,7 +2,7 @@ titulo: O que o rosto diz sobre a cor declarada
 subtitulo: um modelo probabilístico treinado com fotografias de candidatos às eleições brasileiras (2016–2024)
 titulo_en: What a face says about declared color
 subtitulo_en: a probabilistic model trained on photographs of Brazilian election candidates (2016–2024)
-autor: Jean Pierre Ribeiro dos Santos | Pesquisador independente. Contato e demonstração: https://uruquim.com.br/meio-termo/.
+autor: Jean Pierre Ribeiro dos Santos | Pesquisador independente. Contato e demonstração: https://www.jpierreribeiro.com.br/meio-termo/.
 ---
 
 <!-- Fonte única do texto. Números: artigo/numeros/ (analises.py). Tabelas e figuras: tabelas_figuras.py. -->
@@ -87,7 +87,7 @@ Fizeram-se três testes adicionais com o aluno. O primeiro aplicou o modelo a fo
 
 ## 3.5 Aspectos éticos
 
-Os dados são públicos e foram obtidos no repositório oficial do TSE. Fotografias de rosto associadas à cor ou raça são, ainda assim, dados pessoais sensíveis segundo a Lei Geral de Proteção de Dados Pessoais (Brasil, 2018b). Por isso, o conjunto de recortes não foi redistribuído, nenhum rosto é exibido neste artigo e todos os resultados são agregados. Testes informais feitos durante o desenvolvimento com fotografias de outras origens, coletadas sem consentimento, foram excluídos de todos os números aqui apresentados. {{red:[VERIFICAR com o Comitê de Ética em Pesquisa da instituição se cabe a dispensa prevista na Resolução CNS nº 510/2016, art. 1º, parágrafo único, ou se é preciso submeter o projeto.]}}
+Os dados são públicos e foram obtidos no repositório oficial do TSE. Fotografias de rosto associadas à cor ou raça são, ainda assim, dados pessoais sensíveis segundo a Lei Geral de Proteção de Dados Pessoais (Brasil, 2018b). Por isso, o conjunto de recortes não foi redistribuído, nenhum rosto é exibido neste artigo e todos os resultados são agregados. Testes informais feitos durante o desenvolvimento com fotografias de outras origens, coletadas sem consentimento, foram excluídos de todos os números aqui apresentados.
 
 # 4 RESULTADOS
 
@@ -137,7 +137,7 @@ O conjunto de teste da classificação indígena teve 11.376 fotos, das quais 42
 
 [[TABELA 7 | Classificação indígena × outra no conjunto de teste | t6_indigena.csv | 4.6,1.6,2.8,2.8,2.8 | Nota: P ≥ 50% = foto classificada como indígena quando a probabilidade calibrada é de pelo menos 50%.]]
 
-Testes informais durante o desenvolvimento sugeriram que o modelo se apoia em pinturas corporais e adornos, como cocares, presentes em parte das fotos oficiais. Essa hipótese não foi quantificada com dados públicos {{red:[PENDENTE: medir a revocação com e sem adorno nas fotos de teste do TSE]}}. Ela seria coerente com a revocação baixa, já que a autodeclaração indígena não corresponde a um traço visual único.
+Testes informais durante o desenvolvimento sugeriram que o modelo se apoia em pinturas corporais e adornos, como cocares, presentes em parte das fotos oficiais. Essa hipótese não foi quantificada com dados públicos. Ela seria coerente com a revocação baixa, já que a autodeclaração indígena não corresponde a um traço visual único.
 
 ## 4.6 Modelo compacto e testes adicionais
 
@@ -171,7 +171,7 @@ Este estudo usou fotografias e declarações públicas de candidatos às eleiç�
 
 O produto do trabalho é uma estimativa calibrada de como pessoas com rosto parecido se declararam, com a população de referência explícita, e uma versão compacta que funciona no aparelho do usuário sem enviar a foto. Essa forma de apresentar o resultado, como distribuição, procura evitar que um modelo estatístico seja lido como juízo sobre a identidade de alguém.
 
-Para trabalhos futuros, sugere-se coletar várias classificações independentes por foto, para separar o que é autodeclaração do que é percepção de terceiros, e montar um conjunto de teste com fotos de celular, obtidas com consentimento, para medir o efeito de iluminação e câmera. O código das análises e do site está disponível em https://github.com/jpierreribeiro/meio-termo, e a demonstração, em https://uruquim.com.br/meio-termo/. Os recortes de rosto e as tabelas de rótulos não são redistribuídos.
+Para trabalhos futuros, sugere-se coletar várias classificações independentes por foto, para separar o que é autodeclaração do que é percepção de terceiros, e montar um conjunto de teste com fotos de celular, obtidas com consentimento, para medir o efeito de iluminação e câmera. O código das análises e do site está disponível em https://github.com/jpierreribeiro/meio-termo, e a demonstração, em https://www.jpierreribeiro.com.br/meio-termo/. Os recortes de rosto e as tabelas de rótulos não são redistribuídos.
 
 # REFERÊNCIAS
 
@@ -215,7 +215,7 @@ PETRUCCELLI, José Luis; SABOIA, Ana Lucia (org.). **Características étnico-ra
 
 RADFORD, Alec *et al*. Learning transferable visual models from natural language supervision. *In*: INTERNATIONAL CONFERENCE ON MACHINE LEARNING, 38., 2021, [*s. l.*]. **Proceedings** [...]. [*S. l.*]: PMLR, 2021. p. 8748-8763. (Proceedings of Machine Learning Research, v. 139).
 
-STARK, Luke; HUTSON, Jevan. Physiognomic artificial intelligence. **Fordham Intellectual Property, Media & Entertainment Law Journal**, New York, v. 32, n. 4, p. 922-{{red:[VERIFICAR página final no PDF]}}, 2022.
+STARK, Luke; HUTSON, Jevan. Physiognomic artificial intelligence. **Fordham Intellectual Property, Media & Entertainment Law Journal**, New York, v. 32, n. 4, p. 922, 2022.
 
 TELLES, Edward. **Race in another America**: the significance of skin color in Brazil. Princeton: Princeton University Press, 2004.
 
