@@ -160,6 +160,7 @@ figcaption b { color: var(--texto); font-weight: 600; }
   font-size: 15px; font-weight: 600; cursor: pointer;
 }
 .botao:hover { opacity: .88; }
+.botao:disabled { opacity: .55; cursor: progress; }
 .botao:focus-within { outline: 2px solid var(--destaque); outline-offset: 2px; }
 .botao input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 .botao.camera { font-family: inherit; }

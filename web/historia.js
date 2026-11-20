@@ -1,6 +1,6 @@
 // Gráficos da reportagem e a ligação da ferramenta com o modelo (app.js).
 // Números: artigo/tabelas/t3_confusao.csv e t4_escala.csv (professor calibrado, conjunto de teste).
-import { carregarModelos, lerFoto, analisar } from "./app.js?v=20261119d";
+import { carregarModelos, lerFoto, analisar } from "./app.js?v=20261119e";
 
 const $ = id => document.getElementById(id);
 const NS = "http://www.w3.org/2000/svg";
@@ -83,7 +83,7 @@ function status(txt, progresso) {
 function erro(txt) { $("erro").hidden = !txt; $("erro").textContent = txt || ""; }
 
 const MSG = {
-  sem_rosto: "Não encontrei um rosto nessa foto. Tente uma foto de frente, com o rosto inteiro visível e boa luz.",
+  sem_rosto: "Não encontrei um rosto nessa foto. Tente de frente para a câmera, com o rosto inteiro visível e luz vindo da frente (não de trás).",
   varios_rostos: "Encontrei mais de um rosto. Use uma foto com uma pessoa só, ou recorte a foto antes.",
   rosto_pequeno: "O rosto está pequeno demais na foto. Use uma foto mais de perto.",
 };
@@ -135,7 +135,7 @@ const video = $("video");
 function pararCamera() {
   fluxo?.getTracks().forEach(t => t.stop()); fluxo = null;
   video.srcObject = null; video.hidden = true;
-  $("btn-camera").textContent = "Tirar foto"; $("btn-cancelar").hidden = true;
+  $("btn-camera").textContent = "Tirar foto"; $("btn-camera").disabled = false; $("btn-cancelar").hidden = true;
   $("quadro").classList.remove("ao-vivo");
 }
 async function abrirCamera() {
@@ -155,15 +155,39 @@ async function abrirCamera() {
   video.srcObject = fluxo;
   video.hidden = false; $("vazio").hidden = true; $("previa").hidden = true; $("retrato").hidden = true;
   $("quadro").classList.add("ao-vivo");
-  $("btn-camera").textContent = "Capturar"; $("btn-cancelar").hidden = false;
+  $("btn-camera").textContent = "Abrindo a câmera…"; $("btn-camera").disabled = true; $("btn-cancelar").hidden = false;
   try { await video.play(); } catch {}
+  // a webcam costuma mandar quadros pretos enquanto ajusta a exposição, principalmente
+  // quando é reaberta: só libera o botão quando já chegou imagem de verdade
+  const meu = fluxo;
+  for (let i = 0; i < 40 && fluxo === meu && (!video.videoWidth || brilho() < 18); i++) await espera(100);
+  await espera(300);
+  if (fluxo !== meu) return;
+  $("btn-camera").textContent = "Capturar"; $("btn-camera").disabled = false;
 }
-function capturar() {
-  const w = video.videoWidth, h = video.videoHeight;
-  if (!w || !h) return;
-  const c = document.createElement("canvas"); c.width = w; c.height = h;
-  c.getContext("2d").drawImage(video, 0, 0, w, h);
-  c.toBlob(b => { if (b) processar(new File([b], "camera.jpg", { type: "image/jpeg" })); }, "image/jpeg", 0.92);
+const espera = ms => new Promise(r => setTimeout(r, ms));
+// brilho médio do quadro atual, numa miniatura 32x32 (0 = preto, 255 = branco)
+function brilho() {
+  if (!video.videoWidth) return 0;
+  const c = document.createElement("canvas"); c.width = c.height = 32;
+  const g = c.getContext("2d", { willReadFrequently: true }); g.drawImage(video, 0, 0, 32, 32);
+  const d = g.getImageData(0, 0, 32, 32).data;
+  let s = 0; for (let i = 0; i < d.length; i += 4) s += (d[i] + d[i + 1] + d[i + 2]) / 3;
+  return s / 1024;
+}
+let capturando = false;
+async function capturar() {
+  if (capturando || !fluxo) return;
+  capturando = true;
+  try {
+    for (let i = 0; i < 20 && brilho() < 18; i++) await espera(100);   // ainda escuro: espera um pouco
+    const w = video.videoWidth, h = video.videoHeight;
+    if (!w || !h) return;
+    const c = document.createElement("canvas"); c.width = w; c.height = h;
+    c.getContext("2d").drawImage(video, 0, 0, w, h);
+    const b = await new Promise(r => c.toBlob(r, "image/jpeg", 0.92));
+    if (b) processar(new File([b], "camera.jpg", { type: "image/jpeg" }));
+  } finally { capturando = false; }
 }
 $("btn-camera").addEventListener("click", () => fluxo ? capturar() : abrirCamera());
 $("btn-cancelar").addEventListener("click", () => {

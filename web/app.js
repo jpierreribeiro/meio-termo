@@ -4,6 +4,9 @@
 
 const ENTRADA = 640;                      // YuNet 2023mar: entrada fixa 640x640, BGR 0-255
 const LADO = 160, OLHOS_Y = 0.40, DIST_OLHOS = 0.28, MIN_DIST = 12, SCORE_MIN = 0.8;
+// fotos de celular e webcam (luz de tela, rosto um pouco de lado) às vezes ficam abaixo de 0,8,
+// que foi calibrado nas fotos de urna; nesse caso tenta de novo com 0,6
+const SCORE_RESERVA = 0.6, SCORE_PISO = 0.5;
 const ZOOMS = [0.95, 1.0, 1.05];          // média de 6 variações (3 escalas x espelho)
 const MEDIA = [0.485, 0.456, 0.406], DESVIO = [0.229, 0.224, 0.225];
 const MAX_LADO_FOTO = 2048;
@@ -121,7 +124,7 @@ async function detectar(img, det) {
     const bb = out[`bbox_${s}`].data, kp = out[`kps_${s}`].data;
     for (let i = 0; i < cls.length; i++) {
       const score = Math.sqrt(Math.min(Math.max(cls[i], 0), 1) * Math.min(Math.max(obj[i], 0), 1));
-      if (score < SCORE_MIN) continue;
+      if (score < SCORE_PISO) continue;
       const r = Math.floor(i / cols), col = i % cols;
       const cx = (col + bb[4 * i]) * s, cy = (r + bb[4 * i + 1]) * s;
       const bw = Math.exp(bb[4 * i + 2]) * s, bh = Math.exp(bb[4 * i + 3]) * s;
@@ -195,7 +198,10 @@ function saturacao(rec) {
 export async function analisar(img, progresso) {
   const { det, cls } = await carregarModelos();
   progresso?.("Procurando o rosto…");
-  const rostos = await detectar(img, det);
+  const todos = await detectar(img, det);
+  let rostos = todos.filter(r => r.score >= SCORE_MIN);
+  if (!rostos.length) rostos = todos.filter(r => r.score >= SCORE_RESERVA);
+  console.info("[meio-termo] foto", img.width + "x" + img.height, "melhor score do rosto:", todos[0]?.score?.toFixed(3) ?? "nenhum");
   if (!rostos.length) return { erro: "sem_rosto" };
   rostos.sort((a, b) => b.caixa[2] * b.caixa[3] - a.caixa[2] * a.caixa[3]);
   const p = rostos[0];
