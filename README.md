@@ -2,7 +2,7 @@
 
 Quanto uma foto do rosto informa sobre a cor ou raça que a pessoa **declara**? Este projeto responde com as bases públicas do TSE: 1,57 milhão de candidaturas (2016–2024) e 113 mil fotos de candidatos (2018–2024).
 
-- **Demonstração:** https://uruquim.com.br/meio-termo/ (o modelo roda no navegador e a foto não sai do aparelho)
+- **Demonstração:** https://www.jpierreribeiro.com.br/meio-termo/ (o modelo roda no navegador e a foto não sai do aparelho)
 - **Artigo (NBR 6022, em revisão):** [`artigo/artigo_cor_declarada_ABNT.pdf`](artigo/artigo_cor_declarada_ABNT.pdf)
 
 ## Principais resultados
